@@ -20,7 +20,7 @@ Phase column: P1 = Core, P2 = Insights, P3 = People and money, P4 = Advanced (se
 - **Success feedback:** a short toast ("Saved", "Deleted", "Backed up") and return to the previous screen.
 - **Empty states:** one line that says what goes here and a primary button to add the first item.
 - **Text size and RTL:** layouts must survive large system text and right-to-left languages.
-- **Phase gating:** several P1 screens draw elements from later phases. Build them in their own phase and hide them until then: Home quick add line (P2), Home debt boxes (P3), Home bell (P4), Add's On behalf link (P3), Detail's Duplicate (P1) and Repeats row (P2), Settings rows for Recurring and Budgets (P2), Debts and Splits (P3), Pro banner and Allowed senders (P4), Reports tab and Reports export icon (P2). In P1 the Reports tab opens a plain "Reports arrive in a later update" placeholder; it is removed from release builds until P2 is done.
+- **Phase gating:** several P1 screens draw elements from later phases. Build them in their own phase and hide them until then: Home quick add line (P2), Home debt boxes (P3), Home bell (P4), Add's On behalf link (P3), Detail's Duplicate (P1) and Repeats row (P2), Settings rows for Recurring and Budgets (P2), Debts and Splits (P3), Pro banner and Allowed senders (P4), Reports tab, period arrows and Reports export icon (P2), Pro tag on Export (P4). In P1 the Reports tab opens a plain "Reports arrive in a later update" placeholder; it is removed from release builds until P2 is done.
 - **Free limits and Pro:** read through the `Entitlements` service (SPEC). A blocked action opens Pro with the reason line ("You have 3 open splits. Settle one or unlock Pro.").
 - **Notifications:** the first time a feature needs them (budget alert, reminder, backup reminder) show a one-line explanation, then the system permission. If denied, features still work and Settings shows "Notifications are off" with a link to system settings.
 - **Sample data in the static screens is illustrative only** and is not always internally consistent (see the "Known sample slips" list at the end).
@@ -91,7 +91,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - **Account** field: picker of accounts with balances. Default is the account used last for this type, else Cash. For Transfer this becomes **From** and a second **To** field appears; they must differ.
 - **Date** field: date picker, default today; future dates allowed (the entry is marked "Upcoming" and counts from its date).
 - **Note** field: free text, one line.
-- **Tags** (optional): free-text chips, shown on Detail; not drawn on Add (GAPS). Show a small "Add tags" row until used.
+- **Tags** row under Note (drawn): free-text chips, typed with no chevron, optional; shown on Detail. Several tags are separated by commas; tags are created on first use and suggested afterwards.
 - Save button text follows the type: "Save expense", "Save income", "Save transfer".
 
 **Rules**
@@ -130,7 +130,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - Entries created by a split or a debt payment open their parent (split or debt) for editing; Delete is offered there so the ledger stays consistent.
 - Recurring entries show an extra row "Repeats monthly" linking to the recurring item. Editing one posted entry changes only that entry.
 - Adjustment entries show "Adjustment" in the type pill and can only be deleted, not edited.
-- Not drawn: Duplicate button and the pills for debt, adjustment and upcoming entries (GAPS).
+- Duplicate sits beside Edit in one row (drawn); Delete is full width below it. Not drawn: the pills for debt, adjustment and upcoming entries (GAPS).
 
 ## 7. Accounts (`Accounts.html`, route `/accounts`, P1)
 
@@ -208,7 +208,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 **Elements**
 - Title "Reports" with an export icon (opens Backup and export; Pro).
 - Tabs: **Where it went** | **Trends**.
-- Period chips: Week, Month, Year, Custom (Custom opens a date-range picker). Previous/next arrows beside the heading ("Spent in Nov") move to the earlier or later period (not drawn, see GAPS); the next arrow is disabled at the current period.
+- Period chips: Week, Month, Year, Custom (Custom opens a date-range picker). Below them a row with previous and next arrows around the period label ("November 2026"; Week shows the date range, Year shows "2026", Custom shows its range with no arrows). The next arrow is disabled (dimmed) at the current period. The donut centre keeps "Spent in Nov".
 - Donut chart with the total spent in the centre, one segment per category.
 - Legend list: color swatch, category, percent, amount. Top 5 top-level categories plus a roll-up row for the rest. Name the roll-up "Everything else" so it is not confused with the category "Other" (the static design says "Other"). Percentages are adjusted so the legend adds to 100 (the static sample adds to 99).
 
@@ -241,7 +241,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 **Actions**
 - Tap a loan, installment, on-behalf or held row → Debt detail. Tap a split row → Split detail.
 - A **Split a bill** secondary button sits next to Add debt (drawn) and opens Split a bill. The other entry is More → Debts and splits, which opens this screen.
-- Add debt form: screen 30. Direction (I lent / I borrowed), person, amount, due date, account (or "No account"), note. If an account is chosen it creates a `debt_out`/`debt_in` entry that is not an expense or income; with "No account" only the debt is recorded. Owner decision: the form gets an optional **Installment** row (not drawn yet, GAPS), see screen 30. A date row is also not drawn.
+- Add debt form: screen 30. Direction (I lent / I borrowed), person (labelled Lender for I borrowed), amount, date, due date, account (or "No account"), installment (borrowed only), note. If an account is chosen it creates a `debt_out`/`debt_in` entry that is not an expense or income; with "No account" only the debt is recorded.
 - Free tier: 3 open loans and 3 open splits (SPEC defines what counts); the 4th shows Pro with the reason. Adding a debt (screen 30) or a split counts here.
 - Reminders: if a due date is set, a local notification on the due date at 9:00.
 
@@ -282,7 +282,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - Method segmented: **Equal, Exact, Percent, Shares**.
 - People checklist (the user plus others) with each person's amount; a check box per person; **Add person**.
 - Summary: "Your share is $15. The other three owe you $45, tracked until they pay."
-- Missing in the design: **Date** (default today) and **Category** (default Fun › Outings; used for the user's own share). Add both as Field rows under What for. (GAPS)
+- **Date** (default today) and **Category** (default Food › Dining in the sample; the user's own share uses it) are Field rows under Paid by (drawn).
 - **Save split**.
 
 **Rules**
@@ -309,11 +309,11 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 **Elements**
 - Title "More".
 - **Pocketbook Pro** banner (gold star on dark): "One payment, yours for life" → Pro.
-- **General:** Language, Currency, Month starts on (day 1–28). There is no Theme row in v1 (light only); the static screen draws one, leave it out.
+- **General:** Language, Currency, Month starts on (day 1–28). There is no Theme row in v1 (light only).
 - **Security:** App lock switch (on opens Create a PIN, screen 22; off asks for the PIN), Face ID or fingerprint switch (needs App lock on).
 - **Money:** Recurring items, Debts and splits (opens Debts), Budgets, Categories, Accounts.
 - **Data and capture:** Backup and export, Allowed senders (count of senders, opens screen 25, P4).
-- **Drawn since the first audit:** a **Debts and splits** row in Money (opens Debts) and the Allowed senders row opens screen 25. **Still not drawn (GAPS):** Reminders (daily "log your day"), Auto-lock time, Change PIN, About and help, Delete all data.
+- **Drawn since the first audit:** a **Debts and splits** row in Money (opens Debts), the Allowed senders row opens screen 25, and the Theme row is gone. **Still not drawn (GAPS):** Reminders (daily "log your day"), Auto-lock time, Change PIN, About and help, Delete all data.
 
 **Rules**
 - **Currency is locked once any entry exists** (any transaction, debt or split). Until then it can be changed freely. When locked the row is read-only, shows no chevron, and a line under it says "Currency can't be changed once you have entries." The only way to change it is Delete all data and set up again (back up first). Pro (P4) adds accounts in other currencies; the base currency stays as chosen.
@@ -324,7 +324,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 **Elements**
 - Back, title.
 - **Last backup** card: time, size, a "Safe" pill (green) when the last backup is under 14 days old; an amber "Old" pill after that; an amber "No backup yet" pill if never. Time and size come from the last backup made on this phone.
-- **Plain-file note** under the buttons (not yet drawn): "Backups are not encrypted. Anyone with the file can read your data, so keep it somewhere private."
+- **Plain-file note** under the restore text (drawn): "**Backups are not encrypted.** Anyone with the file can read your data, so keep it somewhere private."
 - **Back up now**: creates one file (all data, no PIN) and opens the share/save sheet.
 - **Restore from a file**: file picker, then confirm "This replaces everything on this phone with the backup." Cancel / Replace. After success the app restarts at Home.
 - **Weekly backup reminder** switch (day and time, default Sunday 9 pm).
@@ -333,7 +333,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 **Rules**
 - The file is not encrypted, so the card says "Anyone with this file can read your data." (optional password is a possible later release). File name `pocketbook-YYYY-MM-DD`. Backup is a SQLite copy with a `schema_version`; restoring an older file migrates it up; restore refuses files from a newer app version with a clear message.
 - Restore never touches the PIN or lock setting. After restore, reminders and notifications are rescheduled and recurring catch-up runs.
-- Free users see Export report with a small "Pro" tag; tapping it opens Pro (not drawn). Backup and restore are always free.
+- **Export report** carries a small gold "Pro" tag (drawn); for free users tapping it opens Pro. Backup and restore are always free. The tag uses a pale gold fill and dark gold text that are not tokens yet (GAPS).
 - Errors (cannot read file, not a Pocketbook file, file from a newer version, disk full) show one line with Try again.
 
 ## 21. Pocketbook Pro (`Pro.html`, route `/pro`, P4)
@@ -406,10 +406,10 @@ Opened from More → Allowed senders and from "Manage allowed senders" on Review
 
 **Behavior and rules**
 - Android: shows the sender list and Add sender. The first time, a permission explainer then the system screen for notification access (SMS only if added later). If access is off the list shows "Notification access is off" with a button to the system setting. Not drawn.
-- iPhone: there is no sender list; only the How a message is read and On iPhone cards, plus an "Open Shortcuts" button. Hide Add sender. Not drawn.
+- iPhone (decided): only the Shortcuts guide. No sender list, no Add sender, no How a message is read card; keep the On iPhone steps, an "Open Shortcuts" button and Review entries. Not drawn (GAPS).
 - Add sender form (not drawn): sender name or number, the account the messages are about, an optional default category. Tapping a card edits it; delete is inside edit. A switch off keeps the sender but stops reading.
 - The "· Android" text is the platform note; it is not shown to iPhone users.
-- Missing link to Review entries from here (GAPS): add a "Review entries (N)" row at the top.
+- **Review entries** (secondary button with a bell icon, drawn) sits below Add sender and opens Review entries. On Android Add sender is the primary button.
 
 ## 26. New account (`AddAccount.html`, route `/accounts/create`, P1)
 
@@ -480,15 +480,15 @@ Opened from Debts → Add debt.
 **Elements**
 - Back arrow (to Debts), title "Add debt", segmented **I lent / I borrowed**.
 - Fields: **Person** (picker with Add person), **Amount**, **Due date** (optional), **From account** (reads **Into account** for I borrowed), **Note**.
-- **Installment** row (decided, not drawn): shown only for I borrowed with an account chosen. Tapping it asks for the monthly amount and the day of month; empty means no installment. Shown on Debts as "Installment $50 monthly".
-- Helper: "Money you lend leaves the account but is not an expense. Choose "No account" if the money did not pass through one."
+- **Date** row (drawn): when the money moved; default today, past dates allowed, future dates not. Debt detail's first history line uses it. **Installment** row (drawn): only for I borrowed with an account chosen. Shows the amount and day ("$50 · 1st of month"); empty means none. Shown on Debts as "Installment $50 monthly".
+- Helper, I lent: "Money you lend leaves the account but is not an expense. Choose "No account" if the money did not pass through one." Helper, I borrowed (drawn): "Installment is optional and only for money you borrow. It is paid from the account on that day, with a reminder the day before. Money you borrow is not income." The static screen draws I borrowed; I lent shows From account and no Installment row.
 - **Save debt** (primary).
 
 **Rules**
 - Amount greater than 0. Person required. The account picker has a "No account" option.
-- With an account, a `debt_out` (lent) or `debt_in` (borrowed) entry is created dated today. With no account, only the debt exists and no balance changes.
+- With an account, a `debt_out` (lent) or `debt_in` (borrowed) entry is created on the chosen Date. With no account, only the debt exists and no balance changes.
 - Free tier: the 4th open loan opens Pro instead.
-- A due date adds a due pill on Debts and a reminder on the due date. Not drawn: a Date row (DebtDetail shows "Lent 12 Oct"), so use today until it is designed, and the Installment row.
+- A due date adds a due pill on Debts and a reminder on the due date; it cannot be before the Date.
 - **Installment rules:** saving creates a recurring item of type debt payment linked to the debt (`recurring.debt_id`), paid from the chosen account, reminder 1 day before. Each due date posts a `debt_out` payment for the installment amount, or the remaining balance if smaller; when the debt reaches zero the item stops. Editing or deleting the debt updates or removes it. Installments are only for money the user owes; for I lent there is no row, so money is never auto-recorded as received.
 
 
@@ -504,7 +504,8 @@ Opened from Debts → Add debt.
 - Accounts: the Cash card says "Wallet" instead of "Cash · USD".
 - Debts: lists 6 debts, more than the 3 free loans; it is a Pro or sample view. Split shares do not count.
 - Trends: stat label is "Saved this month" even when the chips can change the period.
-- Settings: draws a Theme row; v1 is light only, so omit it.
-- Detail, Add, Split a bill, Reports, Backup and Pro were not changed in the canvas: they still lack the items listed in GAPS (Duplicate, Tags, Date and Category rows, period arrows, backup note, Pro tag and copy).
+- Backup: the gold Pro tag uses colors that are not tokens (fill `#F6EBCF`, text `#7A5B12`).
+- Add debt: the static screen draws I borrowed (a $200 personal loan); the I lent version is only described.
 - Welcome's restore link opens the Backup screen; build a direct file picker.
 - Pin Confirm is drawn only in its error state.
+- The canvas board for Confirm PIN is titled "Confirm PIN (error state)"; its page title is "Confirm PIN".

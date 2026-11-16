@@ -99,7 +99,7 @@ Navigation: bottom bar with Home, History, a raised Add button, Reports, More. 7
 
 ## Look
 
-Calm and simple. Off-white background, white cards with a 1px border, one deep-green accent, green for money in, red for debts and overspending, amber for warnings. Neutral icon tiles; no per-category colors. One font (Inter). The only gold is on the Pro banner. Tokens are in `docs/design/tokens.json`; map each token to a CSS variable of the same name.
+Calm and simple. Off-white background, white cards with a 1px border, one deep-green accent, green for money in, red for debts and overspending, amber for warnings. Neutral icon tiles; no per-category colors. One font (Inter). Gold appears only on Pro things: the Pro banner and the small Pro tag (pale gold fill, dark gold text; both need tokens). Tokens are in `docs/design/tokens.json`; map each token to a CSS variable of the same name.
 
 ## Phase 1 done means
 
