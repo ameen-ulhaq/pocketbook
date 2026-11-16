@@ -1,6 +1,6 @@
 # Pocketbook: screen-by-screen spec
 
-Source of truth for what each of the 39 designed screens contains and does. Each entry lists every element, every option, every action, the states, and the rules behind it.
+Source of truth for what each of the 46 designed screens contains and does. Each entry lists every element, every option, every action, the states, and the rules behind it.
 
 - **Design file:** the matching static page in `docs/design/screens/<Name>.html` (open `docs/design/screens/index.html`). Sample amounts there are examples only (US dollars); real values come from the user's data and currency.
 - **Online (clickable):** https://claude.ai/artifact/McKtWDuTK1kgQKSnffzJrs
@@ -22,6 +22,7 @@ Phase column: P1 = Core, P2 = Insights, P3 = People and money, P4 = Advanced (se
 - **Text size and RTL:** layouts must survive large system text and right-to-left languages.
 - **Phase gating:** several P1 screens draw elements from later phases. Build them in their own phase and hide them until then: Home quick add line (P2), Home debt boxes (P3), Home bell (P4), Add's On behalf link (P3), Detail's Duplicate (P1) and Repeats row (P2), Settings rows for Recurring and Budgets (P2), Debts and Splits (P3), Pro banner and Allowed senders (P4), Reports tab, period arrows and Reports export icon (P2), Pro tag on Export (P4). In P1 the Reports tab opens a plain "Reports arrive in a later update" placeholder; it is removed from release builds until P2 is done.
 - **Free limits and Pro:** read through the `Entitlements` service (SPEC). A blocked action opens Pro with the reason line ("You have 3 open splits. Settle one or unlock Pro.").
+- **Edit forms reuse the New forms.** Editing a category, budget, recurring item, debt or sender opens the same form as New (screens 27, 29, 28, 30, 36), filled in, with the title "Edit …", the primary button reading "Save changes", and a red **Delete** button at the bottom (a secondary button with red text and a trash icon, confirmed with Cancel and a red action). Accounts use their own Edit account (screen 41), which has Archive instead of Delete. Nothing else changes: same fields, same validation.
 - **Notifications:** the first time a feature needs them (budget alert, reminder, backup reminder) show a one-line explanation, then the system permission. If denied, features still work and Settings shows "Notifications are off" with a link to system settings.
 - **Sample data in the static screens is illustrative only** and is not always internally consistent (see the "Known sample slips" list at the end).
 
@@ -142,8 +143,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - Helper text about transfers.
 
 **Actions**
-- Tap an account → Account detail (see GAPS; the static design has no link from a card): its transactions, Edit (name, type, opening balance), Adjust balance (asks for the real balance, creates an `adjustment` entry for the difference; not income or spending), Archive (hides it and removes it from totals; confirm if the balance is not zero; history kept) and Delete (only when it has no entries).
-- Add account form: screen 26 (name, type, currency, opening balance). Credit cards may go negative.
+- Tap a card → Account detail (screen 40). Add account form: screen 26 (name, type, currency, opening balance). Credit cards may go negative.
 - Free tier: single currency. Multi-currency accounts are Pro (P4).
 
 ## 8. Categories (`Categories.html`, route `/categories`, P1)
@@ -173,7 +173,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - A budget is monthly and follows the month start day. Overall budget is separate from category budgets (it is not the sum of them). One budget per category; the form hides categories that already have one. A category budget includes its subcategories. No rollover.
 - The percent is rounded to the nearest whole number but shows 99% until spending actually reaches the limit. At exactly 100% the bar is amber and the pill says "100% used"; "Over by" starts above the limit.
 - Alerts: local notification at 80% and 100% (once each per month).
-- New budget form: screen 29 (Whole month or One category, monthly limit, 80%/100% warning switch). Edit and delete by tapping a card (edit mode and Delete not drawn).
+- New budget form: screen 29 (Whole month or One category, monthly limit, 80%/100% warning switch). Tapping a card opens the same form filled in with a red Delete (see "Edit forms reuse the New forms").
 
 ## 10. Recurring (`Recurring.html`, route `/recurring`, P2)
 
@@ -199,7 +199,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 
 **Actions**
 - Add saves exactly as parsed. If no category was found ("Uncategorized") Add opens Add prefilled instead, because a category is required. Edit opens Add prefilled. Ignore removes it from the list (kept hidden so the same message is not offered again).
-- The same message is never offered twice. The drawn Add sender form has no account or category row, so a card uses the account last used and no category (GAPS: add an Account row).
+- The same message is never offered twice. A card uses the account and default category of its sender (screen 36).
 - Android reads notifications from allowed senders (SMS is an optional later addition, only if the store allows it); iPhone gets entries from a Shortcuts automation. See `docs/SPEC.md`.
 - Empty state: "No messages waiting." Reached from the bell when the badge shows, and from More → Allowed senders → Review entries (the bell is hidden at 0).
 
@@ -257,7 +257,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 **Rules**
 - A payment cannot exceed what remains. At zero the debt becomes "Settled" and the form is hidden.
 - Payments move money in the chosen account and are not income or expense.
-- A "⋯" menu (not drawn, see GAPS) offers Edit (due date, note, installment) and Delete debt. Deleting asks for confirmation and, if payments exist, whether to keep or remove their account entries.
+- A "⋯" button in the header opens the Debt menu (screen 42): Edit debt, Change due date, Mark as settled, Delete debt. Deleting asks for confirmation and, if payments exist, whether to keep or remove their account entries.
 - The History card also lists the opening movement ("Lent 12 Oct · Cash −$80"). A debt with no account shows no account in its rows.
 
 ## 16. Paid on behalf (`OnBehalf.html`, route `/behalf`, P3)
@@ -302,7 +302,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 
 **Rules**
 - Each payment updates that person's debt and the progress. Fully paid splits show "Settled".
-- Edit or delete the split from a menu (see GAPS); deleting removes the linked expense and debts after confirmation.
+- A "⋯" button in the header opens the Split menu (screen 43): Edit split, Share summary, Delete split. Deleting removes the linked expense and debts after confirmation.
 
 ## 19. More / Settings (`Settings.html`, route `/settings`, P1)
 
@@ -401,20 +401,20 @@ Opened from More → Allowed senders and from "Manage allowed senders" on Review
 
 **Elements**
 - Back arrow, title "Allowed senders", note: "Only messages from these senders are read, and only on this phone. Nothing is saved until you tap Add in Review entries."
-- One card per sender: icon tile, name ("Bank alert", "Mobile Wallet"), "Sender name or number · Android", and an on/off switch. The count in More ("2") is the number of senders.
+- One card per sender: icon tile, name ("Bank alert", "Mobile Wallet"), the sender string and platform ("HBLBANK · Android"), and an on/off switch. The count in More ("2") is the number of senders.
 - **How a message is read** card: an example message ("Debit $30 at FUEL STATION on 15-Nov.") and three pills showing what was found (Amount $30, Expense, Fuel station).
 - **On iPhone** card: "Set up a Shortcuts automation for each bank message. Steps: 1. Open Shortcuts. 2. New automation, Message. 3. Run "Add to Pocketbook"."
 - **Add sender** (primary, opens screen 36) and **Review entries** (secondary, bell icon, opens Review entries).
 
 **Behavior and rules**
-- Android: shows the sender list and Add sender. The first time, a permission explainer then the system screen for notification access (SMS only if added later). If access is off the list shows "Notification access is off" with a button to the system setting. Not drawn.
+- Android: shows the sender list and Add sender. The first time, a permission explainer then the system screen for notification access (SMS only if added later). If access is off the screen is Allowed senders: access off (screen 45).
 - iPhone (decided): this screen is replaced by Auto-capture on iPhone (screen 37), which has only the Shortcuts guide.
-- Add sender form: screen 36. Tapping a card opens the same form in edit mode (Delete inside, not drawn). A switch off keeps the sender but stops reading.
+- Add sender form: screen 36. Tapping a card opens the same form in edit mode with a red Delete (see "Edit forms reuse the New forms"). A switch off keeps the sender but stops reading.
 - The "· Android" text is the platform note; it is not shown to iPhone users.
 
 ## 26. New account (`AddAccount.html`, route `/accounts/create`, P1)
 
-Opened from Accounts → Add account. Edit mode (not drawn) has the title "Edit account" and the same fields, plus Adjust balance, Archive and Delete.
+Opened from Accounts → Add account. Editing uses Edit account (screen 41).
 
 **Elements**
 - Back arrow, title "New account".
@@ -427,11 +427,11 @@ Opened from Accounts → Add account. Edit mode (not drawn) has the title "Edit 
 - Name is required and unique among open accounts (case-insensitive), because quick add matches by name.
 - Opening balance may be negative only for the Card type; it must fit the currency's decimals. Default 0.
 - Free tier: the currency is the base currency and the row is read-only with no chevron; changing it is Pro (P4).
-- Opening balance is not income. Editing it later changes the balance by the difference.
+- Opening balance is not income. After the account has entries it is no longer edited; use Edit account → Balance, which adds an Adjustment.
 
 ## 27. New category (`AddCategory.html`, route `/categories/create`, P1)
 
-Opened from Categories → New category; tapping a category opens the same form in edit mode (title "Edit category", plus Archive and Delete, not drawn).
+Opened from Categories → New category; tapping a category opens the same form filled in (title "Edit category", red Delete, plus Archive).
 
 **Elements**
 - Back arrow, title "New category", segmented **Expense / Income**.
@@ -458,7 +458,7 @@ Opened from Categories → New category; tapping a category opens the same form 
 - The Note is the item's name in the Recurring list; if empty the category name is used.
 - The first posting is the next date on or after today that matches the schedule; today's day is included. There is no start date field.
 - The drawn form has no debt installment type; debt installments are in GAPS.
-- Edit mode (not drawn): same form, a Delete button, and the pause switch stays on the list. Changes affect future postings only.
+- Edit mode: same form, filled in, with a red Delete; the pause switch stays on the list. Changes affect future postings only.
 
 ## 29. New budget (`AddBudget.html`, route `/budgets/create`, P2)
 
@@ -472,11 +472,11 @@ Opened from Categories → New category; tapping a category opens the same form 
 **Rules**
 - Category picker lists top-level expense categories that do not yet have a budget; Whole month is available only once (if it exists, the form opens it for editing).
 - Limit must be greater than 0. Store the switch as `alerts_on` on the budget; alerts are once per threshold per month.
-- Edit mode (not drawn): title "Edit budget", same fields, and a Delete button.
+- Edit mode: title "Edit budget", same fields, filled in, with a red Delete.
 
 ## 30. Add debt (`AddDebt.html`, route `/debts/create`, P3)
 
-Opened from Debts → Add debt.
+Opened from Debts → Add debt. Edit debt reuses this form, filled in, with a red Delete.
 
 **Elements**
 - Back arrow (to Debts), title "Add debt", segmented **I lent / I borrowed**.
@@ -516,7 +516,7 @@ Opened from New category → See all.
 **Elements**
 - Back arrow, title "Reminders", note: "Reminders are notifications made on this phone. No account or internet is needed."
 - Switch cards: **Log your day** ("A nudge to add today's spending"), **Weekly backup** ("Sundays at 9 pm"), **Budget warnings** ("At 80% and 100% of a budget"), **Recurring and debt due dates** ("The day before").
-- **Time** row (9:00 pm, opens a time picker) belongs to Log your day.
+- **Time** row (9:00 pm) belongs to Log your day and opens the Time picker (screen 44).
 - Note: "If notifications are off in your phone settings, reminders cannot appear. Turn them on there."
 - **Done** (primary).
 
@@ -532,10 +532,10 @@ Opened from New category → See all.
 - Back arrow, title "About and help", logo tile, "Pocketbook", "Version 1.0.0".
 - Card rows: **Privacy** "Stays on this phone", **Accounts** "None needed", **Internet** "Not used".
 - Note: "Pocketbook has no server. Your money data is stored only on this phone and in backup files you make yourself."
-- Link rows: **Help and tips**, **Contact support**, **Rate Pocketbook**.
+- Link rows: **Help and tips** (opens screen 46), **Contact support**, **Rate Pocketbook**.
 
 **Rules**
-- The version is read from the app. Help and tips opens a plain help page (not drawn; GAPS: write the content). Contact support opens the mail app with a prefilled subject, never with user data. Rate Pocketbook opens the store page; these two leave the app and are the only external hand-offs.
+- The version is read from the app. Help and tips opens the in-app Help page (screen 46). Contact support opens the mail app with a prefilled subject, never with user data. Rate Pocketbook opens the store page; these two leave the app and are the only external hand-offs.
 
 ## 35. Erase everything (`EraseConfirm.html`, route `/settings/erase`, P1)
 
@@ -556,15 +556,15 @@ Opened from More → Delete all data and from Forgot PIN → Erase and start ove
 
 **Elements**
 - Back arrow (to Allowed senders), title "Add sender".
-- Fields: **Name** (a label such as "Bank alert") and **Sender** (the name or number the messages come from, e.g. HBLBANK).
+- Fields: **Name** (a label such as "Bank alert"), **Sender** (the name or number the messages come from, e.g. HBLBANK), **Account** (the account the messages are about, e.g. Main Bank) and **Category** (a default category, or "Ask me each time").
 - Note: "Enter the name or number the messages arrive from, exactly as your phone shows it. Pocketbook only reads messages from senders you add."
 - **Try it with a message**: a text box for pasting a sample message; below it pills show what was found (Amount $30, Expense, Fuel station). "Nothing is saved from a test."
 - **Save sender** (primary).
 
 **Rules**
-- Name and Sender are required; Sender is matched exactly and case-insensitively. A duplicate Sender is refused.
+- Name and Sender are required; Sender is matched exactly and case-insensitively. A duplicate Sender is refused. The Account row sets the account of every capture from this sender.
 - The test is parsed on the phone with the same rules as capture and never creates an entry.
-- Not drawn: an Account row and an optional default category row (GAPS). Edit mode has the title "Edit sender" and a Delete button.
+- Account is required. Category defaults to "Ask me each time"; then a capture opens Add with the category picker first. With a category set, Add on a Review card saves with it. Edit mode has the title "Edit sender" and a red Delete.
 
 ## 37. Auto-capture on iPhone (`SendersIphone.html`, route `/senders`, P4)
 
@@ -600,6 +600,92 @@ Opened from More → Change PIN.
 - A correct PIN, or a biometric success, opens Create a PIN (screen 22) and then Confirm PIN (screen 23); Create's Skip is hidden. Success returns to More with the toast "PIN changed".
 - A wrong PIN uses the same attempt count and lockout waits as the Lock screen.
 
+## 40. Account detail (`AccountDetail.html`, route `/accounts/{id}`, P1)
+
+Opened by tapping a card on Accounts.
+
+**Elements**
+- Back arrow (to Accounts), title = the account name ("Main Bank"), a "⋯" button (opens Edit account), "Bank · USD" and the balance in large type ("$1,423").
+- **Edit** (secondary, opens screen 41) and **Transfer** (secondary, opens Add in Transfer mode with this account as From).
+- **Recent in this account**: the latest 4 entries of this account as transaction rows (icon, name, "Category · date", signed amount); each opens Detail.
+- **See all in History** (secondary): opens History filtered to this account.
+
+**Rules**
+- Balance is the current balance (SPEC formula). Rows are newest first by date, then time added (the static sample is out of order). An account with no entries says "Nothing in this account yet."
+- Transfers into or out of the account appear with their sign for this account; adjustments appear as "Adjustment".
+- An archived account opens with an "Archived" pill and an Unarchive button in place of Transfer.
+
+## 41. Edit account (`EditAccount.html`, route `/accounts/{id}/edit`, P1)
+
+**Elements**
+- Back arrow (to Account detail), title "Edit account".
+- Fields: **Name**, **Type** (picker: Cash, Bank, Card, Wallet), **Currency** (read-only, no chevron), **Balance** (typed, current balance).
+- Note: "Changing the balance adds an "Adjustment" entry. It is not counted as income or spending. Currency cannot change once the account has entries."
+- **Archive account** (secondary with red text and trash icon). Note: "Archiving hides the account but keeps its history. You cannot delete an account that has entries."
+- **Save changes** (primary).
+
+**Rules**
+- Changing Balance adds one `adjustment` entry for the difference, dated today, named "Adjustment" (the user may then edit its note). If the account has no entries yet, the opening balance is changed instead and no adjustment is made.
+- Name is required and unique among open accounts. Changing Type never changes the balance.
+- Archive asks for confirmation; if the balance is not zero the text says "Its balance will not count in your total." An account with no entries shows **Delete account** (red) in the same place as Archive.
+- The Cash account created at setup can be edited and archived like any other, but at least one open account must remain; the last one cannot be archived.
+
+## 42. Debt menu (`DebtMenu.html`, route sheet on `/debts/{id}`, P3)
+
+A bottom sheet opened by the "⋯" button on Debt detail, over a dimmed Debt detail. Header line: "Ali Raza · loan".
+
+**Rows**
+- **Edit debt**: opens Add debt filled in with a red Delete (screen 30).
+- **Change due date**: a date picker; saving updates the due pill and reminder. Clearing the date removes them.
+- **Mark as settled**: closes the debt without a payment. It asks "Mark as settled? The remaining $50 will be written off. No money moves." Cancel / Mark settled. The History card then shows "Settled without payment · $50" and the form is hidden. Reversible by recording nothing; to reopen, use Edit debt.
+- **Delete debt** (red): confirmation; if payments exist it asks whether to keep or remove their account entries.
+- **Cancel** closes the sheet.
+
+**Rules**
+- A written-off amount is not income, expense or a payment and changes no balance. It is stored on the debt as `written_off_minor` and counted out of "Owed to you" / "You owe".
+- Settled debts leave the open-loan count (free limit).
+
+## 43. Split menu (`SplitMenu.html`, route sheet on `/splits/{id}`, P3)
+
+A bottom sheet opened by the "⋯" button on Split detail. Header line: "Dinner, Spice Garden · split".
+
+**Rows**
+- **Edit split**: opens Split a bill filled in with a red Delete.
+- **Share summary**: the share sheet with the text listing who owes what (same as the button on Split detail).
+- **Delete split** (red): confirmation; removes the own-share expense and all debts. If payments were recorded it adds "Recorded payments will also be removed."
+- **Cancel** closes the sheet.
+
+## 44. Time picker (`TimePicker.html`, route sheet on `/settings/reminders`, P2)
+
+A bottom sheet over Reminders, titled "Reminder time".
+
+**Elements**
+- Three wheels: hour (7, 8, **9**, 10, 11), minute (40, 50, **00**, 10, 20) and am/pm; the centre row is highlighted. Minutes move in steps of 10 (the drawn wheel). Locales with a 24-hour clock show hour 0–23 and no am/pm column.
+- **Cancel** and **Set time** (primary). Set time saves and returns to Reminders with the new time.
+
+## 45. Allowed senders: access off (`SendersOff.html`, route `/senders`, P4)
+
+Android only, shown instead of screen 25 when notification access is off.
+
+**Elements**
+- Back arrow (to More), title "Allowed senders".
+- Amber alert: "Notification access is off. Pocketbook cannot see bank notifications until you allow it in your phone settings. Nothing is read from senders you have not added."
+- The sender list, dimmed to 55%, with the switches shown as they are saved.
+- **Open phone settings** (primary) and **Add sender** (secondary, opens screen 36).
+
+**Rules**
+- When the user returns from system settings the screen re-checks access and switches to screen 25 if it is on.
+- Adding or editing a sender still works while access is off; capture simply does not run.
+
+## 46. Help and tips (`Help.html`, route `/help`, P1)
+
+**Elements**
+- Back arrow (to About and help), title "Help and tips".
+- Five text cards, each a question and a short answer: **Where is my data?** (only on this phone; make a backup from More, Backup and export), **I got a new phone** (install, tap "Have a backup? Restore it", choose the file), **A transfer is not spending** (balances change, reports do not), **Someone paid me back** (Debts, tap the person, Record a payment; not income), **I forgot my PIN** (no reset; use Face ID, or erase and restore a backup).
+
+**Rules**
+- Cards are plain text, not expandable and not links; the page scrolls. Strings go through the language files like the rest of the app. Add a card only when a flow needs explaining.
+
 
 ---
 
@@ -616,6 +702,9 @@ Opened from More → Change PIN.
 - Backup: the gold Pro tag uses colors that are not tokens (fill `#F6EBCF`, text `#7A5B12`).
 - Add debt: the static screen draws I borrowed (a $200 personal loan); the I lent version is only described.
 - Welcome's restore link opens the Backup screen; build a direct file picker.
+- Account detail lists its rows out of date order (14 Nov, 1 Nov, 5 Nov, 12 Nov); list newest first.
+- The Debt, Split and time sheets are drawn over blank placeholder cards, and Cancel and the menu rows link to "#".
+- The "⋯" on Account detail opens Edit account directly; it is the same as the Edit button.
 - Erase everything links Back and Cancel to More; from Forgot PIN they return to Forgot PIN.
 - Pin Confirm is drawn only in its error state.
 - The canvas board for Confirm PIN is titled "Confirm PIN (error state)"; its page title is "Confirm PIN".

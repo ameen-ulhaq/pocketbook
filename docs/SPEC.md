@@ -77,15 +77,15 @@ A simple, complete personal expense app for everyone, in any region. Works offli
 - `budgets(id, category_id nullable, limit_minor, period, alerts_on)`: `period` is always `month` in v1; `alerts_on` is the form's warning switch (default on); null category = overall budget; one budget per category.
 - `recurring(id, type, amount_minor, account_id, category_id, debt_id nullable, note, frequency, day, month, start_on, next_run_on, active, remind_days)`: `type` is expense, income or debt_payment; `day` is day of month (1–31, clamped to the month's last day) or weekday; `month` is used by yearly.
 - `people(id, name)`
-- `debts(id, person_id, direction, kind, principal_minor, currency, due_on, note, status, installment_minor nullable)`: `direction` owed_to_me or i_owe; `kind` loan, on_behalf, held, split_share, installment; `status` open or settled. Remaining = principal − sum of payments.
+- `debts(id, person_id, direction, kind, principal_minor, currency, due_on, note, status, installment_minor nullable, written_off_minor)`: `direction` owed_to_me or i_owe; `kind` loan, on_behalf, held, split_share, installment; `status` open or settled. Remaining = principal − sum of payments − written_off_minor. "Mark as settled" writes off the remainder: no entry, no balance change, and it is neither income nor expense.
 - `debt_payments(id, debt_id, amount_minor, account_id nullable, occurred_on, note)`: one row per payment. When `account_id` is set the payment also owns one `debt_out`/`debt_in` transaction (`transactions.debt_id`), which is what moves the balance. A debt's opening movement (lent or borrowed through an account) is the same kind of transaction, not a payment.
 - `splits(id, title, total_minor, paid_account_id nullable, paid_by_person_id nullable, method, occurred_on, category_id, transaction_id)`
 - `split_shares(id, split_id, person_id nullable for the user, input_value, share_minor, debt_id)`: `input_value` keeps the typed percent, weight or exact amount so the split can be edited.
 - `captures(id, sender_id, received_at, raw_text, amount_minor, account_id, merchant, category_id, status)`: status new, added or ignored. (P4)
-- `allowed_senders(id, name_or_number, account_id, default_category_id, enabled)` (P4)
+- `allowed_senders(id, name, sender, account_id, default_category_id nullable, enabled)` (P4): a null category means "Ask me each time".
 - `exchange_rates(currency, rate_to_base, updated_on)` (P4, Pro)
 
-## Screens (39)
+## Screens (46)
 
 Row 1: Welcome and setup, App lock, Home, Add transaction, Transactions (history), Transaction detail.
 Row 2: Accounts, Categories, Budgets, Recurring, Review auto-captured entries.
@@ -95,6 +95,8 @@ Row 4: Split a bill, Split detail, Settings (More), Backup and export, Pro upgra
 Row 5 (PIN and capture): Create a PIN, Confirm PIN, Forgot PIN, Allowed senders.
 Row 6 (Add and edit forms): New account, New category, New budget, New recurring item, Add debt.
 Row 7 (Settings pages and states): Choose an icon, Auto-lock, Reminders, About and help, Erase everything, Add sender, Auto-capture on iPhone, Forgot PIN (no biometrics), Change PIN.
+Row 8 (Menus, details and states): Account detail, Edit account, Debt menu, Split menu, Time picker, Allowed senders (access off), Help and tips.
+Edit forms for categories, budgets, recurring items, debts and senders reuse the New forms, filled in, with a red Delete; accounts have their own Edit account with Archive.
 
 Navigation: bottom bar with Home, History, a raised Add button, Reports, More. 78px high, labels always shown. Accounts, Categories, Budgets and Debts are list screens under More: they keep the bar with More highlighted and have no Back arrow. Recurring, Review entries, Backup, Pro and every detail or form screen have a Back arrow and no bar.
 
