@@ -1,5 +1,15 @@
 # Changelog
 
+## Design update 4: 46 screens (2026-11-16)
+- **New screens 40 to 46 in SCREENS:** Account detail, Edit account, Debt menu, Split menu, Time picker, Allowed senders (access off), Help and tips.
+- **Changed screens:** Add sender now has Account and Category rows ("Ask me each time" default); Accounts cards open Account detail; Debt detail and Split detail have a "⋯" that opens their menus; Reminders' Time row opens the Time picker; About links to Help and tips. SCREENS 7, 15, 18, 25, 26, 27, 28, 29, 36 and 38 updated.
+- **Owner rule recorded (SCREENS global rules, SPEC, FLOWS 23):** edit forms for category, budget, recurring item and debt (and sender) reuse the New forms, filled in, with the title "Edit …", "Save changes" and a red Delete. Accounts use Edit account, which has Archive (and Delete when empty).
+- **SPEC:** screen count 46, row 8; `debts.written_off_minor` for "Mark as settled" (no entry, no balance change); `allowed_senders` now has `name`, `sender`, `account_id`, nullable `default_category_id`.
+- **FLOWS:** accounts (21), edit or delete a debt or split (23), reminders with the picker (25), new flows 32 (access off) and 33 (help); reachability lists all 46.
+- **Static HTML:** 7 new and 6 changed screens in `docs/design/screens/`; the index shows all 46.
+- **GAPS:** the matching design items removed; "Design still needed" now holds the settled-debt state, Delete account button, the time-picker minute step (Decide) and the Erase back target.
+- **New findings:** the Edit account Balance field adjusts instead of editing the opening balance (opening balance is editable only before entries exist); "Mark as settled" needs a settled look on Debt detail; the time wheel steps by 10 minutes; the sheets are drawn over placeholder cards.
+
 ## Design update 3: 39 screens, gold tokens (2026-11-16)
 - **Tokens:** added `gold-tint` `#F6EBCF` and `gold-ink` `#7A5B12` to `tokens.json` and `tokens.css` (Pro tag only). Contrast checked with the WCAG formula: gold-ink on gold-tint 5.31:1, on white 6.30:1, on the page background 5.87:1. All pass 4.5:1 for body text.
 - **New screens 31 to 39 in SCREENS:** Choose an icon, Auto-lock, Reminders, About and help, Erase everything, Add sender, Auto-capture on iPhone, Forgot PIN (no biometrics), Change PIN.

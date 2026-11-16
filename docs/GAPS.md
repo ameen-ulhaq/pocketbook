@@ -1,11 +1,13 @@
 # Pocketbook: what the design does not show yet
 
-The 39 designed screens cover the main path, setup, PIN, capture, add/edit forms and the settings pages. Everything below is needed for a complete app but is not drawn. For each: what it must do, and a recommended default so it can be built. Build these with the design system tokens and the existing patterns (Field rows, Chips, Buttons, Cards). Mark a design request in your report so the owner can have it designed.
+The 46 designed screens cover the main path, setup, PIN, capture, add/edit forms, settings pages, detail screens, menus and states. Everything below is needed for a complete app but is not drawn. For each: what it must do, and a recommended default so it can be built. Build these with the design system tokens and the existing patterns (Field rows, Chips, Buttons, Cards). Mark a design request in your report so the owner can have it designed.
 
 Status key: **Decide** = needs the owner's call (a default is given so work is not blocked); **Default** = safe to build as described. **Design** = a drawn screen or change is needed before the owner would call it finished; the default is to build it from existing components in the meantime. Phase in brackets.
 
 ## Drawn since the first audit (no longer gaps)
 Restore link on Welcome; Create PIN, Confirm PIN (error state), Forgot PIN; Forgot PIN? link on Lock; Allowed senders (Android list, iPhone steps); New account, New category, New budget, New recurring item, Add debt; Split a bill button and the Overdue pill on Debts; "Debts and splits" row in More; Allowed senders opens its screen. They are written up as SCREENS 22–30.
+
+Drawn in the fourth update: Account detail, Edit account, Debt menu, Split menu, Time picker, Allowed senders with access off, Help and tips; Account and Category rows on Add sender; Accounts cards open Account detail; "⋯" menus on Debt detail and Split detail; Time row opens the picker; Help link on About. Owner rule: edit forms for category, budget, recurring item, debt and sender reuse the New forms, filled in, with a red Delete.
 
 Drawn in the third update: Choose an icon (24 icons), Auto-lock, Reminders, About and help, Erase everything (type ERASE), Add sender with a message test, Auto-capture on iPhone, Forgot PIN with no biometrics, Change PIN; More now has Reminders, Auto-lock, Change PIN, About and help and Delete all data; New category links to the icon picker; the Pro tag colors are now the tokens `gold-tint` and `gold-ink`.
 
@@ -29,21 +31,20 @@ Drawn in the second update: Tags row on Add; Duplicate on Detail; Date and Categ
 Category picker (with subcategories, search, New category); Account picker (with balances and a "No account" option on Add debt); Date picker; Month picker; Custom date-range picker; Person picker (with Add person); Day-of-month picker (1–28 for month start; 1–31 for recurring); Repeats, On day and Remind pickers on New recurring item; Inside (parent) picker on New category; Filter sheet in History (account, category, amount range; lives in the month chip's sheet); Share sheet (system); Discard-changes confirm; Upcoming (future-dated) marker. All Default; none drawn.
 
 ## Forms and states of drawn forms not drawn
-- Edit modes of New account, New category, New budget and New recurring item (titles "Edit …", Archive/Delete/Adjust balance, pause). Default
-- Edit debt (due date, note, installment); edit or delete split; Add person; Adjust account balance. Default
+- Edit modes: owner rule, no separate designs. Category, budget, recurring item, debt and sender reuse the New forms filled in with a red Delete; accounts use Edit account. Done
+- Add person and the Person picker. Default
 - Free-tier Currency row on New account (read-only, no chevron). Default
 - Validation and error states of every form (empty name, duplicate name, zero amount, split not adding up). Default
 
 ## Design still needed (short list)
-- **Add sender:** an **Account** row (which account the messages belong to) and an optional default category. The drawn form has neither, so a captured entry uses the last used account until they exist. **Design**
-- **Android capture states:** the "notification access is off" state on Allowed senders. **Design**
-- **Help and tips:** the page behind that row on About and help, and its text. **Design** and content
-- **Edit modes** of the drawn forms (account, category, budget, recurring, sender), with their Delete buttons. Default
-- **Time picker** for Reminders. Default
+- **Debt-settled state:** how Debt detail looks after "Mark as settled" (a "Settled without payment" history line). **Design**
+- **Delete account** button for an account with no entries (same place as Archive). Default
+- **Time picker minutes:** the wheel steps by 10; confirm this is intended or use 5. **Decide**
 - **Back and Cancel on Erase everything** return to the caller (More or Forgot PIN); the static links all go to More. Default
+- The Debt, Split and time sheets are drawn over blank cards; build them over the real screen. Default
 
 ## Detail screens not drawn
-Account detail (balance, its transactions, edit, adjust, archive, delete when empty; the Accounts cards have no link yet); Category detail (month total, entries); CSV statement import (choose file, map columns once, preview, skip duplicates); Share-to-add (receive text, show parsed Add screen) [P4]; Recurring item detail; Person detail (all debts and splits with that person); Debt/Split "⋯" menus. Default.
+Category detail (month total, entries); CSV statement import (choose file, map columns once, preview, skip duplicates); Share-to-add (receive text, show parsed Add screen) [P4]; Recurring item detail; Person detail (all debts and splits with that person). Default.
 
 ## Elements the design does not show that the rules need
 - Pills on Detail and History for debt movements, adjustments and upcoming entries. Default
