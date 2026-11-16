@@ -1,5 +1,14 @@
 # Changelog
 
+## Design update 2: 10 screens refreshed (2026-11-16)
+Re-read from the canvas; docs and `docs/design/screens/` now match.
+- **Add:** Tags row under Note. **Detail:** Duplicate beside Edit. **Split a bill:** Date and Category rows. **Reports (both tabs):** period arrows around the period label, next dimmed at the current period.
+- **Backup and export:** "Backups are not encrypted" note; gold Pro tag on Export report. **More:** Theme row removed. **Allowed senders:** Review entries button. **Add debt:** Date row and Installment row (the static screen shows I borrowed, with "Lender"). **Pro:** copy now "notifications and Shortcuts".
+- SCREENS: those entries rewritten; phase gating and sample-slips lists updated; the Pro tag and Date rules added.
+- SPEC: gold rule widened to the Pro banner and Pro tag.
+- GAPS: the matching design items removed; new "Design still needed" short list (Pro tag colors as tokens, iPhone Allowed senders layout, More rows, Forgot PIN states, Add sender form, 16 icons).
+- New finding: the Pro tag colors are not tokens.
+
 ## Owner decisions: v1 details (2026-11-16)
 - Backup shows "Old" (amber) after 14 days, "Safe" before.
 - Western digits (0–9) in all languages for v1.

@@ -7,6 +7,8 @@ Status key: **Decide** = needs the owner's call (a default is given so work is n
 ## Drawn since the first audit (no longer gaps)
 Restore link on Welcome; Create PIN, Confirm PIN (error state), Forgot PIN; Forgot PIN? link on Lock; Allowed senders (Android list, iPhone steps); New account, New category, New budget, New recurring item, Add debt; Split a bill button and the Overdue pill on Debts; "Debts and splits" row in More; Allowed senders opens its screen. They are written up as SCREENS 22–30.
 
+Drawn in the second update: Tags row on Add; Duplicate on Detail; Date and Category rows on Split a bill; period arrows on Reports; the not-encrypted note and Pro tag on Backup and export; Theme row removed; Review entries button on Allowed senders; Date and Installment rows on Add debt; Pro copy "notifications and Shortcuts".
+
 ## Setup and security
 | Item | Needed behavior | Status |
 | --- | --- | --- |
@@ -30,25 +32,24 @@ Category picker (with subcategories, search, New category); Account picker (with
 - Add sender (name or number, account, optional default category), Android notification-access explainer and "access is off" state, iPhone-only version of Allowed senders (no list, "Open Shortcuts"). **Default · Design**
 - Free-tier Currency row on New account (read-only, no chevron). Default
 - Validation and error states of every form (empty name, duplicate name, zero amount, split not adding up). Default
-- **Date row on Add debt** (Debt detail shows "Lent 12 Oct", the form has no date). **Design**
-- **Date and Category rows on Split a bill.** **Design**
-- **Tags on Add** (free-text chips). **Design**
 - Full icon set for categories: only 8 icons are drawn; the list of about 24 is under "Category icon set". **Design** (draw the other 16)
+
+## Design still needed (short list)
+- **Pro tag colors:** the Backup screen uses `#F6EBCF` (fill) and `#7A5B12` (text), which are not tokens. Add `gold-tint` and `gold-ink` to `tokens.json` and the design system, and check contrast. **Design**
+- **Allowed senders on iPhone:** guide only (no list, no Add sender, no How a message is read), with an "Open Shortcuts" button. **Design**
+- **More rows:** Auto-lock, Change PIN, Reminders, About and help, Delete all data. **Design**
+- **Forgot PIN:** biometric-off state and the erase confirmation. **Design**
+- **Add sender form** and the Android "notification access is off" state. **Design**
+- **Category icons:** draw the other 16 of the 24 (see "Category icon set"). **Design**
+- **Edit modes** of the drawn forms. Default
 
 ## Detail screens not drawn
 Account detail (balance, its transactions, edit, adjust, archive, delete when empty; the Accounts cards have no link yet); Category detail (month total, entries); CSV statement import (choose file, map columns once, preview, skip duplicates); Share-to-add (receive text, show parsed Add screen) [P4]; Recurring item detail; Person detail (all debts and splits with that person); Debt/Split "⋯" menus. Default.
 
 ## Elements the design does not show that the rules need
-- **Duplicate** button on Detail (one-tap repeat, in SPEC but in no screen). **Design**
 - Pills on Detail and History for debt movements, adjustments and upcoming entries. Default
-- **Previous/next period arrows** on Reports. Without them past months cannot be seen. **Design**
-- **Plain-file note** on Backup and export, and the **Pro tag** on Export report for free users. **Design**
-- **Pro screen copy**: "SMS and Shortcuts" should read "notifications and Shortcuts". **Design**
-- **Review entries link** on Allowed senders (the bell hides at 0 and Senders only links out). **Design**
-- **Theme row** is still drawn on More; v1 is light-only, so omit it. **Design** (remove)
 - **Auto-lock, Change PIN, Reminders, About and help, Delete all data** rows on More. **Design**
 - Delete debt/split and Edit in a menu; Remind setting. Default
-- **Installment row on Add debt** (decided): optional, only for I borrowed with an account; creates a recurring debt payment. **Design** (not drawn)
 
 ## Rules that were missing or contradictory (now written)
 - Month naming when the start day is not 1 (named by the month it starts in). Default
