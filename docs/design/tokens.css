@@ -1,0 +1,40 @@
+/* Generated from tokens.json. Map every token to a CSS variable of the same name. */
+:root{
+  --bg: #F7F7F4;
+  --surface: #FFFFFF;
+  --surface-tint: #EDF1ED;
+  --line: #E8E7E1;
+  --ink: #15201B;
+  --muted: #5F6B64;
+  --accent: #0B5D45;
+  --accent-deep: #0A4F3B;
+  --accent-tint: #E4F0EA;
+  --income: #0B7A57;
+  --expense: #B4341F;
+  --expense-tint: #FBE9E5;
+  --warning: #8A5A00;
+  --warning-tint: #FBF0DA;
+  --info: #2F5FB3;
+  --violet: #6B4FA3;
+  --chart-orange: #C8643A;
+  --chart-gray: #6E7872;
+  --gold: #E3C27F;
+  --on-accent: #FFFFFF;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+  --shadow-fab: 0 6px 16px rgba(11,93,69,0.28);
+  --size-tap: 44px;
+  --size-button: 52px;
+  --size-field: 54px;
+  --size-nav: 78px;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
