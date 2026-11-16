@@ -61,7 +61,7 @@ Each flow lists the steps in order, the screen at each step, and the rule that m
 1. **Debts** (Home debt boxes, or More → Debts and splits) → **Add debt** → I lent, person, amount, due date, From account (or "No account"), note → **Save debt**.
 2. Debt appears under Owed to you. Later: tap it → **Debt detail**.
 3. Enter the amount received (default = remaining) and the account it went into → **Record payment**.
-4. At zero the debt shows Settled. **Remind** shares a message through the share sheet.
+4. At zero the debt shows the settled look: **Record payment** hidden, a green **Settled** pill. **Remind** shares a message through the share sheet until then. Debt menu → **Mark as settled** gets the same look, with a written-off line in the history.
 
 ## 11. Borrow money and repay
 Same as 10 with "I borrowed". The payment form says **From** and reduces the chosen account.
@@ -116,7 +116,7 @@ Optional: set an **Installment** (amount and day of month) on Add debt. On each 
 1. More → **Accounts** → **Add account** → **New account**: pick Type (Cash, Bank, Card, Wallet), Name, Currency, Opening → **Save account**.
 2. Tap an account → **Account detail**: balance, **Edit**, **Transfer**, recent entries, **See all in History**.
 3. **Edit** → **Edit account**: change Name or Type; change **Balance** to the real figure and the difference is saved as an Adjustment entry (not income or spending; on an account with no entries the opening balance changes instead).
-4. **Archive account** (confirm), or **Delete account** when it has no entries.
+4. An account with entries has **Archive account** (confirm) only. An account with no entries has **Delete account** instead (confirm: "Delete this account? It has no entries and cannot be restored.").
 
 ## 22. Manage categories
 1. More → **Categories** → Expense or Income → **New category**: Expense/Income, Name, Inside (optional parent), Icon → **Save category**.

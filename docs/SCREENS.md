@@ -255,7 +255,8 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - **Record payment** (primary) and **Remind** (shares a text through the share sheet, for example WhatsApp).
 
 **Rules**
-- A payment cannot exceed what remains. At zero the debt becomes "Settled" and the form is hidden.
+- A payment cannot exceed what remains. At zero the debt becomes settled and the settled look applies.
+- **Settled look (decided):** a debt that is paid in full or written off uses this same Debt detail, with the **Record payment** block hidden, a green **Settled** pill next to the name or in place of "Owes you $50", and its history card ending in a line for the write-off when there was one ("Written off 15 Nov · $50", no account, no sign). Progress reads "Paid back $30 of $80" and the bar is full for a paid debt; for a written-off debt the bar shows what was paid and the text adds "$50 written off". **Remind** is hidden. The "⋯" menu stays; Edit debt can reopen it.
 - Payments move money in the chosen account and are not income or expense.
 - A "⋯" button in the header opens the Debt menu (screen 42): Edit debt, Change due date, Mark as settled, Delete debt. Deleting asks for confirmation and, if payments exist, whether to keep or remove their account entries.
 - The History card also lists the opening movement ("Lent 12 Oct · Cash −$80"). A debt with no account shows no account in its rows.
@@ -627,7 +628,7 @@ Opened by tapping a card on Accounts.
 **Rules**
 - Changing Balance adds one `adjustment` entry for the difference, dated today, named "Adjustment" (the user may then edit its note). If the account has no entries yet, the opening balance is changed instead and no adjustment is made.
 - Name is required and unique among open accounts. Changing Type never changes the balance.
-- Archive asks for confirmation; if the balance is not zero the text says "Its balance will not count in your total." An account with no entries shows **Delete account** (red) in the same place as Archive.
+- Archive asks for confirmation; if the balance is not zero the text says "Its balance will not count in your total." **Delete account** appears only for an account with no entries, in the same place as Archive and in the same style (secondary, red text, trash icon), and replaces the Archive button. It asks "Delete this account? It has no entries and cannot be restored." Cancel / Delete. An account with entries shows Archive only and can never be deleted.
 - The Cash account created at setup can be edited and archived like any other, but at least one open account must remain; the last one cannot be archived.
 
 ## 42. Debt menu (`DebtMenu.html`, route sheet on `/debts/{id}`, P3)
@@ -637,7 +638,7 @@ A bottom sheet opened by the "⋯" button on Debt detail, over a dimmed Debt det
 **Rows**
 - **Edit debt**: opens Add debt filled in with a red Delete (screen 30).
 - **Change due date**: a date picker; saving updates the due pill and reminder. Clearing the date removes them.
-- **Mark as settled**: closes the debt without a payment. It asks "Mark as settled? The remaining $50 will be written off. No money moves." Cancel / Mark settled. The History card then shows "Settled without payment · $50" and the form is hidden. Reversible by recording nothing; to reopen, use Edit debt.
+- **Mark as settled**: closes the debt without a payment. It asks "Mark as settled? The remaining $50 will be written off. No money moves." Cancel / Mark settled. The debt then opens in the settled look (below). To reopen it, use Edit debt.
 - **Delete debt** (red): confirmation; if payments exist it asks whether to keep or remove their account entries.
 - **Cancel** closes the sheet.
 
@@ -660,7 +661,7 @@ A bottom sheet opened by the "⋯" button on Split detail. Header line: "Dinner,
 A bottom sheet over Reminders, titled "Reminder time".
 
 **Elements**
-- Three wheels: hour (7, 8, **9**, 10, 11), minute (40, 50, **00**, 10, 20) and am/pm; the centre row is highlighted. Minutes move in steps of 10 (the drawn wheel). Locales with a 24-hour clock show hour 0–23 and no am/pm column.
+- Three wheels: hour (7, 8, **9**, 10, 11), minute (the wheel shows 40, 50, **00**, 10, 20 as drawn) and am/pm; the centre row is highlighted. Decided: minutes move in steps of 5 (00, 05, 10 … 55), so the wheel must list every fifth minute; the drawn wheel's steps of 10 are a sample slip. Locales with a 24-hour clock show hour 0–23 and no am/pm column.
 - **Cancel** and **Set time** (primary). Set time saves and returns to Reminders with the new time.
 
 ## 45. Allowed senders: access off (`SendersOff.html`, route `/senders`, P4)
