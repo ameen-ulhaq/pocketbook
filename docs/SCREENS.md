@@ -1,6 +1,6 @@
 # Pocketbook: screen-by-screen spec
 
-Source of truth for what each of the 30 designed screens contains and does. Each entry lists every element, every option, every action, the states, and the rules behind it.
+Source of truth for what each of the 39 designed screens contains and does. Each entry lists every element, every option, every action, the states, and the rules behind it.
 
 - **Design file:** the matching static page in `docs/design/screens/<Name>.html` (open `docs/design/screens/index.html`). Sample amounts there are examples only (US dollars); real values come from the user's data and currency.
 - **Online (clickable):** https://claude.ai/artifact/McKtWDuTK1kgQKSnffzJrs
@@ -61,7 +61,7 @@ Shown on launch and when returning to the app after the auto-lock time, if App l
 - A **Forgot PIN?** link under the biometric link opens Forgot PIN (screen 24). It stays available during a lockout wait.
 - While the app is in the app switcher, a plain cover hides balances (and on Android the window is marked secure).
 - Biometric success unlocks; biometric failure falls back to the keypad.
-- Auto-lock time is Immediately, 1 minute or 5 minutes (default 1 minute), set in More.
+- Auto-lock time is Immediately, After 1 minute (default, marked Recommended), After 5 minutes or After 15 minutes, chosen on screen 32.
 - The PIN is stored only as a salted hash in the device keystore; never in the database or backup.
 
 ## 3. Home (`Home.html`, route `/`, P1)
@@ -199,7 +199,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 
 **Actions**
 - Add saves exactly as parsed. If no category was found ("Uncategorized") Add opens Add prefilled instead, because a category is required. Edit opens Add prefilled. Ignore removes it from the list (kept hidden so the same message is not offered again).
-- Each allowed sender is tied to one account (the account the message is about) and an optional default category; the card shows that account. The same message is never offered twice.
+- The same message is never offered twice. The drawn Add sender form has no account or category row, so a card uses the account last used and no category (GAPS: add an Account row).
 - Android reads notifications from allowed senders (SMS is an optional later addition, only if the store allows it); iPhone gets entries from a Shortcuts automation. See `docs/SPEC.md`.
 - Empty state: "No messages waiting." Reached from the bell when the badge shows, and from More → Allowed senders → Review entries (the bell is hidden at 0).
 
@@ -309,11 +309,13 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 **Elements**
 - Title "More".
 - **Pocketbook Pro** banner (gold star on dark): "One payment, yours for life" → Pro.
-- **General:** Language, Currency, Month starts on (day 1–28). There is no Theme row in v1 (light only).
-- **Security:** App lock switch (on opens Create a PIN, screen 22; off asks for the PIN), Face ID or fingerprint switch (needs App lock on).
+- **General:** Language, Currency, Month starts on (day 1–28), **Reminders** (value "On" when any reminder is on, else "Off"; opens screen 33). There is no Theme row in v1 (light only).
+- **Security:** App lock switch (on opens Create a PIN, screen 22; off asks for the PIN), Face ID or fingerprint switch (needs App lock on), **Auto-lock** (value, e.g. "1 minute"; opens screen 32), **Change PIN** (opens screen 39). Auto-lock, Change PIN and the Face ID switch are disabled while App lock is off.
 - **Money:** Recurring items, Debts and splits (opens Debts), Budgets, Categories, Accounts.
-- **Data and capture:** Backup and export, Allowed senders (count of senders, opens screen 25, P4).
-- **Drawn since the first audit:** a **Debts and splits** row in Money (opens Debts), the Allowed senders row opens screen 25, and the Theme row is gone. **Still not drawn (GAPS):** Reminders (daily "log your day"), Auto-lock time, Change PIN, About and help, Delete all data.
+- **Data and capture:** Backup and export, Allowed senders (opens screen 25 on Android and screen 37 on iPhone; the count shows on Android only, P4).
+- **About:** About and help (opens screen 34).
+- **Delete all data** (red text, last row; opens screen 35).
+
 
 **Rules**
 - **Currency is locked once any entry exists** (any transaction, debt or split). Until then it can be changed freely. When locked the row is read-only, shows no chevron, and a line under it says "Currency can't be changed once you have entries." The only way to change it is Delete all data and set up again (back up first). Pro (P4) adds accounts in other currencies; the base currency stays as chosen.
@@ -383,15 +385,15 @@ The static screen draws the **error state** (title "Confirm PIN (error state)");
 Opened from the Lock screen link.
 
 **Elements**
-- Back arrow (to Lock), title "Forgot your PIN?", "Pocketbook has no account or server, so your PIN cannot be reset by email. Pick one of these."
+- Back arrow (to Lock), title "Forgot your PIN?", "Pocketbook has no account or server, so your PIN cannot be reset by email. Pick one of these." When Face ID or fingerprint is off the app shows screen 38 instead.
 - Option card **Use Face ID or fingerprint**: "Works if you turned it on. You can then set a new PIN in More."
 - Option card **Erase and start over** (red): "Deletes everything on this phone. You can restore a backup file afterwards."
 - Buttons at the bottom: primary **Use Face ID or fingerprint**, danger-style secondary **Erase and start over**.
 
 **Behavior**
-- Face ID or fingerprint: system prompt; success unlocks to Home. If biometrics are off or not enrolled the primary button and its card are hidden and the screen says "Face ID or fingerprint is not set up for Pocketbook." Only Erase remains. (Not drawn.)
-- After a biometric unlock the user may change the PIN in More without entering the old one (Change PIN asks for biometric if on, else the current PIN).
-- Erase and start over asks for confirmation (not drawn): "Erase everything? This deletes all data on this phone and cannot be undone." Cancel / Erase. Then it removes the database, settings, PIN and lock settings, and goes to Welcome, whose **Have a backup? Restore it** link restores a file.
+- Face ID or fingerprint: system prompt; success unlocks to Home. If biometrics are off or not enrolled this screen is replaced by Forgot PIN, no biometrics (screen 38).
+- After a biometric unlock the user may change the PIN in More without entering the old one: Change PIN (screen 39) offers "Use Face ID or fingerprint instead".
+- Erase and start over opens Erase everything (screen 35), which needs ERASE typed. Erasing removes the database, settings, PIN and lock settings and goes to Welcome, whose **Have a backup? Restore it** link restores a file. From here Back and Cancel on screen 35 return to Forgot PIN (the static screen links them to More).
 
 ## 25. Allowed senders (`Senders.html`, route `/senders`, P4)
 
@@ -402,14 +404,13 @@ Opened from More → Allowed senders and from "Manage allowed senders" on Review
 - One card per sender: icon tile, name ("Bank alert", "Mobile Wallet"), "Sender name or number · Android", and an on/off switch. The count in More ("2") is the number of senders.
 - **How a message is read** card: an example message ("Debit $30 at FUEL STATION on 15-Nov.") and three pills showing what was found (Amount $30, Expense, Fuel station).
 - **On iPhone** card: "Set up a Shortcuts automation for each bank message. Steps: 1. Open Shortcuts. 2. New automation, Message. 3. Run "Add to Pocketbook"."
-- **Add sender** (primary).
+- **Add sender** (primary, opens screen 36) and **Review entries** (secondary, bell icon, opens Review entries).
 
 **Behavior and rules**
 - Android: shows the sender list and Add sender. The first time, a permission explainer then the system screen for notification access (SMS only if added later). If access is off the list shows "Notification access is off" with a button to the system setting. Not drawn.
-- iPhone (decided): only the Shortcuts guide. No sender list, no Add sender, no How a message is read card; keep the On iPhone steps, an "Open Shortcuts" button and Review entries. Not drawn (GAPS).
-- Add sender form (not drawn): sender name or number, the account the messages are about, an optional default category. Tapping a card edits it; delete is inside edit. A switch off keeps the sender but stops reading.
+- iPhone (decided): this screen is replaced by Auto-capture on iPhone (screen 37), which has only the Shortcuts guide.
+- Add sender form: screen 36. Tapping a card opens the same form in edit mode (Delete inside, not drawn). A switch off keeps the sender but stops reading.
 - The "· Android" text is the platform note; it is not shown to iPhone users.
-- **Review entries** (secondary button with a bell icon, drawn) sits below Add sender and opens Review entries. On Android Add sender is the primary button.
 
 ## 26. New account (`AddAccount.html`, route `/accounts/create`, P1)
 
@@ -435,7 +436,7 @@ Opened from Categories → New category; tapping a category opens the same form 
 **Elements**
 - Back arrow, title "New category", segmented **Expense / Income**.
 - Fields: **Name**, **Inside** (parent picker; empty means top level; "Bills" in the sample).
-- **Icon** grid, one tile selected. Eight icons are drawn (fork and knife, car, bag, bolt, heart, book, ticket, gift); the full fixed set is longer and scrolls (GAPS: list it).
+- **Icon** row: eight icons in a grid with one selected, and a **See all** link that opens Choose an icon (screen 31) with the full set of 24.
 - Helper: "Choose "Inside" to make it a subcategory. Deleting a category that has entries asks you to move them first."
 - **Save category** (primary).
 
@@ -491,6 +492,114 @@ Opened from Debts → Add debt.
 - A due date adds a due pill on Debts and a reminder on the due date; it cannot be before the Date.
 - **Installment rules:** saving creates a recurring item of type debt payment linked to the debt (`recurring.debt_id`), paid from the chosen account, reminder 1 day before. Each due date posts a `debt_out` payment for the installment amount, or the remaining balance if smaller; when the debt reaches zero the item stops. Editing or deleting the debt updates or removes it. Installments are only for money the user owes; for I lent there is no row, so money is never auto-recorded as received.
 
+## 31. Choose an icon (`IconPicker.html`, route `/categories/icon`, P1)
+
+Opened from New category → See all.
+
+**Elements**
+- Back arrow (to New category), title "Choose an icon", note: "One icon per category. Icons are the same neutral color in the app; only the shape differs."
+- A 4-column grid of 24 icon tiles (62px high); one is selected (accent border, `accent-tint` fill). The set is listed in `docs/GAPS.md` under "Category icon set".
+- **Use this icon** (primary): saves the choice and returns to New category with the icon selected.
+
+## 32. Auto-lock (`AutoLock.html`, route `/settings/auto-lock`, P1)
+
+**Elements**
+- Back arrow (to More), title "Auto-lock", note: "How long Pocketbook can be in the background before it asks for your PIN again."
+- Four radio rows, one selected: Immediately ("Every time you leave the app"), After 1 minute ("Recommended", default), After 5 minutes, After 15 minutes.
+- **Done** (primary): saves and returns to More; the More row shows the choice.
+
+**Rules**
+- Only available while App lock is on. The time counts from when the app goes to the background; a cold start always asks for the PIN.
+
+## 33. Reminders (`Reminders.html`, route `/settings/reminders`, P2)
+
+**Elements**
+- Back arrow, title "Reminders", note: "Reminders are notifications made on this phone. No account or internet is needed."
+- Switch cards: **Log your day** ("A nudge to add today's spending"), **Weekly backup** ("Sundays at 9 pm"), **Budget warnings** ("At 80% and 100% of a budget"), **Recurring and debt due dates** ("The day before").
+- **Time** row (9:00 pm, opens a time picker) belongs to Log your day.
+- Note: "If notifications are off in your phone settings, reminders cannot appear. Turn them on there."
+- **Done** (primary).
+
+**Rules**
+- Weekly backup is the same setting as the switch on Backup and export. Budget warnings is a master switch over each budget's own "Warn me" switch (both must be on). The due-date switch covers recurring items with a reminder and debts with a due date.
+- Turning a switch on asks for notification permission the first time (with a one-line explanation). If denied the switch stays on and the note shows.
+- Default time for Log your day is 9:00 pm. Tapping the reminder opens Add.
+- Phases: the screen is built in P1 with only Weekly backup; Log your day and Budget warnings arrive with P2 and the due-date switch with P2/P3. Hide a row until its feature exists.
+
+## 34. About and help (`About.html`, route `/about`, P1)
+
+**Elements**
+- Back arrow, title "About and help", logo tile, "Pocketbook", "Version 1.0.0".
+- Card rows: **Privacy** "Stays on this phone", **Accounts** "None needed", **Internet** "Not used".
+- Note: "Pocketbook has no server. Your money data is stored only on this phone and in backup files you make yourself."
+- Link rows: **Help and tips**, **Contact support**, **Rate Pocketbook**.
+
+**Rules**
+- The version is read from the app. Help and tips opens a plain help page (not drawn; GAPS: write the content). Contact support opens the mail app with a prefilled subject, never with user data. Rate Pocketbook opens the store page; these two leave the app and are the only external hand-offs.
+
+## 35. Erase everything (`EraseConfirm.html`, route `/settings/erase`, P1)
+
+Opened from More → Delete all data and from Forgot PIN → Erase and start over.
+
+**Elements**
+- Back arrow, title "Erase everything?", red trash tile, "This deletes every account, entry, budget, debt and setting on this phone, and removes your PIN. It cannot be undone."
+- **Last backup** card with a pill (Safe, Old or No backup yet).
+- Note: "Pocketbook keeps nothing online. After erasing, you can set up again or restore a backup file."
+- **Type ERASE** field.
+- **Erase everything** (red, with trash icon) and **Cancel**.
+
+**Rules**
+- Erase everything stays disabled until the field reads ERASE exactly (case-insensitive). Then it deletes the database, settings, PIN and lock settings, cancels all scheduled notifications, and opens Welcome. Pro stays with the store account, so Restore purchase brings it back.
+- Back and Cancel return to whichever screen opened it.
+
+## 36. Add sender (`AddSender.html`, route `/senders/create`, P4)
+
+**Elements**
+- Back arrow (to Allowed senders), title "Add sender".
+- Fields: **Name** (a label such as "Bank alert") and **Sender** (the name or number the messages come from, e.g. HBLBANK).
+- Note: "Enter the name or number the messages arrive from, exactly as your phone shows it. Pocketbook only reads messages from senders you add."
+- **Try it with a message**: a text box for pasting a sample message; below it pills show what was found (Amount $30, Expense, Fuel station). "Nothing is saved from a test."
+- **Save sender** (primary).
+
+**Rules**
+- Name and Sender are required; Sender is matched exactly and case-insensitively. A duplicate Sender is refused.
+- The test is parsed on the phone with the same rules as capture and never creates an entry.
+- Not drawn: an Account row and an optional default category row (GAPS). Edit mode has the title "Edit sender" and a Delete button.
+
+## 37. Auto-capture on iPhone (`SendersIphone.html`, route `/senders`, P4)
+
+Replaces Allowed senders on iPhone.
+
+**Elements**
+- Back arrow (to More), title "Auto-capture on iPhone", heading "Auto-capture", "On iPhone, apps cannot read your messages. Instead, a Shortcut sends each bank message to Pocketbook, and you review it before it is saved."
+- Three numbered steps: 1 **Open Shortcuts** ("Go to the Automation tab and tap New Automation."), 2 **Choose Message** ("Enter your bank's sender name and select Run Immediately."), 3 **Add "Add to Pocketbook"** ("Pass the message text. It appears in Review entries.").
+- **Open Shortcuts** (primary) and **Review entries** (secondary).
+
+**Rules**
+- No sender list and no Add sender on iPhone. The More row shows no count.
+- Each message the Shortcut passes becomes one card in Review entries; the sender name comes from the Shortcut. The user still taps Add to save.
+
+## 38. Forgot PIN, no biometrics (`PinForgotNoBio.html`, route `/lock/forgot`, P1)
+
+Shown instead of screen 24 when Face ID or fingerprint is off or not set up.
+
+**Elements**
+- Back arrow (to Lock), title "Forgot your PIN?", "Face ID and fingerprint are off, and Pocketbook has no server to reset your PIN. The only way in is to erase this phone's data and start again."
+- Card **Erase and start over**: "Deletes everything on this phone. Restore a backup file afterwards to get your data back."
+- **Erase and start over** (red, opens screen 35) and **Back** (to Lock).
+
+## 39. Change PIN (`PinCurrent.html`, route `/settings/change-pin`, P1)
+
+Opened from More → Change PIN.
+
+**Elements**
+- Back arrow (to More), title "Change PIN", "Enter your current PIN", "Then you will choose a new one.", four dots and keypad.
+- Link **Use Face ID or fingerprint instead**, shown only when biometrics are on.
+
+**Rules**
+- A correct PIN, or a biometric success, opens Create a PIN (screen 22) and then Confirm PIN (screen 23); Create's Skip is hidden. Success returns to More with the toast "PIN changed".
+- A wrong PIN uses the same attempt count and lockout waits as the Lock screen.
+
 
 ---
 
@@ -507,5 +616,6 @@ Opened from Debts → Add debt.
 - Backup: the gold Pro tag uses colors that are not tokens (fill `#F6EBCF`, text `#7A5B12`).
 - Add debt: the static screen draws I borrowed (a $200 personal loan); the I lent version is only described.
 - Welcome's restore link opens the Backup screen; build a direct file picker.
+- Erase everything links Back and Cancel to More; from Forgot PIN they return to Forgot PIN.
 - Pin Confirm is drawn only in its error state.
 - The canvas board for Confirm PIN is titled "Confirm PIN (error state)"; its page title is "Confirm PIN".

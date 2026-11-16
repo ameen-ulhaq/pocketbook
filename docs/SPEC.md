@@ -44,7 +44,7 @@ A simple, complete personal expense app for everyone, in any region. Works offli
 
 **Paid on behalf:** (a) I paid for someone: not my expense, shows as owed to me. (b) Holding money for someone: money received in my account that I must pay out is not income and clears when paid out.
 
-**Settings:** language (RTL ready), currency, month start day (payday), app lock (PIN + biometric), recurring, budgets, categories, accounts, backup and export, allowed senders.
+**Settings (More):** language (RTL ready), currency (locked once any entry exists), month start day (payday), reminders (log your day, weekly backup, budget warnings, due dates), app lock (PIN + biometric), auto-lock (immediately, 1, 5 or 15 minutes; default 1), change PIN, recurring, debts and splits, budgets, categories, accounts, backup and export, allowed senders (Android list; iPhone Shortcuts guide), about and help, delete all data (type ERASE). No theme setting in v1.
 
 ## Money rules
 
@@ -66,7 +66,7 @@ A simple, complete personal expense app for everyone, in any region. Works offli
 
 ## Data model (draft)
 
-- `settings(key, value)`: language, currency, month_start_day, last_backup_at, reminder times. Security settings are not stored here.
+- `settings(key, value)`: language, currency, month_start_day, last_backup_at, reminder switches and times (log_day_on, log_day_time default 21:00, weekly_backup_on, budget_warnings_on, due_reminders_on). Security settings are not stored here.
 - `accounts(id, name, type, currency, opening_balance_minor, archived)`: `type` is cash, bank, card or wallet (shown as Cash, Bank, Card, Mobile wallet); name unique among open accounts.
 - `categories(id, name, kind, icon, parent_id, sort, archived)`: `kind` is expense or income; a subcategory inherits its parent's kind; one level deep.
 - `transactions(id, type, amount_minor, currency, account_id nullable, to_account_id, category_id, occurred_on, note, source, split_id, debt_id, recurring_id, capture_id, created_at, updated_at)`
@@ -85,7 +85,7 @@ A simple, complete personal expense app for everyone, in any region. Works offli
 - `allowed_senders(id, name_or_number, account_id, default_category_id, enabled)` (P4)
 - `exchange_rates(currency, rate_to_base, updated_on)` (P4, Pro)
 
-## Screens (30)
+## Screens (39)
 
 Row 1: Welcome and setup, App lock, Home, Add transaction, Transactions (history), Transaction detail.
 Row 2: Accounts, Categories, Budgets, Recurring, Review auto-captured entries.
@@ -94,6 +94,7 @@ Row 4: Split a bill, Split detail, Settings (More), Backup and export, Pro upgra
 
 Row 5 (PIN and capture): Create a PIN, Confirm PIN, Forgot PIN, Allowed senders.
 Row 6 (Add and edit forms): New account, New category, New budget, New recurring item, Add debt.
+Row 7 (Settings pages and states): Choose an icon, Auto-lock, Reminders, About and help, Erase everything, Add sender, Auto-capture on iPhone, Forgot PIN (no biometrics), Change PIN.
 
 Navigation: bottom bar with Home, History, a raised Add button, Reports, More. 78px high, labels always shown. Accounts, Categories, Budgets and Debts are list screens under More: they keep the bar with More highlighted and have no Back arrow. Recurring, Review entries, Backup, Pro and every detail or form screen have a Back arrow and no bar.
 
