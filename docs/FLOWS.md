@@ -6,14 +6,15 @@ Each flow lists the steps in order, the screen at each step, and the rule that m
 1. Open app → **Welcome and setup**. (On a new phone: tap **Have a backup? Restore it** instead, choose the file, confirm → Home. Skip the rest.)
 2. Choose Language, Currency, Month start day, Cash on hand.
 3. Tap **Start tracking**. App seeds the Cash account and default categories.
-4. Offer "Create a PIN" (optional, can skip): enter 4 digits, confirm, then ask whether to use Face ID or fingerprint.
-5. Land on **Home** (empty state).
+4. **Create a PIN** opens. Enter 4 digits → **Confirm PIN** → enter them again. A mismatch shows "PINs did not match. Try again." and clears. On **Skip for now** App lock stays off.
+5. On Confirm, "Use Face ID or fingerprint too" (shown only if the device has it) turns biometrics on after the system prompt.
+6. Land on **Home** (empty state).
 
 ## 2. Lock and unlock
 1. App launch or return after the auto-lock time → **App lock**.
 2. Biometric prompt opens first; on failure or cancel use the PIN keypad.
 3. Right PIN → previous screen. Wrong PIN → shake, message, waits from 5 tries on (30 s, 1 min, 5 min, 15 min).
-4. **Forgot PIN?** → biometric if on; otherwise **Reset app** (type RESET to confirm), which erases all data and returns to Welcome, where Restore can load a backup.
+4. **Forgot PIN?** → **Forgot PIN** screen with two choices: **Use Face ID or fingerprint** (only if on; unlocks to Home; then More → Change PIN needs no old PIN) or **Erase and start over** → confirm (Cancel / Erase) → all data, PIN and settings are removed → **Welcome**, where **Have a backup? Restore it** can load a file.
 
 ## 3. Add an expense
 1. Tap the raised **Add** button (or Add from Home empty state).
@@ -48,16 +49,16 @@ Each flow lists the steps in order, the screen at each step, and the rule that m
 
 ## 8. Set a budget
 1. More → **Budgets** → **New budget**. (Tap an existing card to edit its limit or delete it.)
-2. Choose Overall or a category, enter the monthly limit → Save.
+2. On **New budget** choose Whole month or One category, pick the category, enter the monthly limit, leave "Warn me at 80% and 100%" on or off → **Save budget**.
 3. As spending grows the bar goes accent → amber (80%) → red (over); local notifications fire at 80% and 100%.
 
 ## 9. Recurring item
 1. More → **Recurring** → **New recurring item**.
-2. Type (income, expense or a debt installment), amount, category, account, frequency, day, start date, optional reminder → Save.
+2. On **New recurring item** choose Expense or Income, amount, category, account, Repeats, On day, Remind, Note → **Save**. (Debt installments: GAPS.)
 3. When due (checked on app open and by background task) the entry is posted automatically with the due date, once per due date; the switch pauses it. Tap a card to edit (future postings only) or delete (posted entries stay).
 
 ## 10. Lend money and get repaid
-1. **Debts** (Home debt boxes, or More → Debts) → **Add debt** → I lent, person, amount, due date, account the money left from (or "No" if no account was involved).
+1. **Debts** (Home debt boxes, or More → Debts and splits) → **Add debt** → I lent, person, amount, due date, From account (or "No account"), note → **Save debt**.
 2. Debt appears under Owed to you. Later: tap it → **Debt detail**.
 3. Enter the amount received (default = remaining) and the account it went into → **Record payment**.
 4. At zero the debt shows Settled. **Remind** shares a message through the share sheet.
@@ -66,7 +67,7 @@ Each flow lists the steps in order, the screen at each step, and the rule that m
 Same as 10 with "I borrowed". The payment form says **From** and reduces the chosen account.
 
 ## 12. Split a bill and collect
-1. More → **Splits**, or Debts → **Split a bill**.
+1. More → **Debts and splits** → **Split a bill** (the same button is on Debts).
 2. Enter total, What for, Date, Category, Paid by (you + account, or another person), method, pick people, adjust amounts.
 3. **Save split**: one expense for the user's own share (none if the user is not in the split), one debt per other person. If someone else paid, the expense has no account and one debt is owed to that person.
 4. Later open **Split detail**: **Record payment** per person (partial allowed), **Share summary** to message everyone.
@@ -76,7 +77,7 @@ Same as 10 with "I borrowed". The payment form says **From** and reduces the cho
 - **Holding money for them:** mode 2 → Person, Amount, Received into, Note → Save. Account rises, you owe them, no income. Paying it out is a payment against that debt.
 
 ## 14. Review auto-captured messages
-1. Bell on Home (badge), or More → Allowed senders → **Review entries**.
+1. Bell on Home (badge), or More → Allowed senders → **Review entries** (the link from Allowed senders is not drawn yet; Review entries has "Manage allowed senders" the other way).
 2. For each card: **Add** (opens Add prefilled when no category was found), **Edit** (opens Add prefilled), or **Ignore**.
 3. Nothing is saved until Add. Android collects on its own; iPhone entries arrive through the Shortcuts automation.
 
@@ -111,12 +112,12 @@ Same as 10 with "I borrowed". The payment form says **From** and reduces the cho
 2. Unlock, or go back; nothing is lost. Settling or deleting one frees a slot.
 
 ## 21. Manage accounts
-1. More → **Accounts** → **Add account** (name, type, currency, opening balance) → Save.
+1. More → **Accounts** → **Add account** → **New account**: pick Type (Cash, Bank, Card, Wallet), Name, Currency, Opening → **Save account**.
 2. Tap an account → **Account detail**: Edit, **Adjust balance**, Archive, Delete (only with no entries).
 3. Adjust balance: enter the real balance; the difference is saved as an Adjustment entry (not income or spending).
 
 ## 22. Manage categories
-1. More → **Categories** → Expense or Income → **New category** (name, icon, optional parent) → Save.
+1. More → **Categories** → Expense or Income → **New category**: Expense/Income, Name, Inside (optional parent), Icon → **Save category**.
 2. Tap a row → edit, archive, or delete. Deleting a category in use asks which category receives its entries first.
 
 ## 23. Edit or delete a debt or split
@@ -124,7 +125,7 @@ Same as 10 with "I borrowed". The payment form says **From** and reduces the cho
 2. Deleting a split removes its own-share expense and debts; deleting a debt with payments asks whether to keep or remove the account entries.
 
 ## 24. Reset after a forgotten PIN
-See flow 2. Reset app erases the database and settings; a backup file can then be restored from Welcome.
+See flow 2 step 4. Erase removes the database, settings and PIN; a backup file can then be restored from Welcome.
 
 ## 25. Daily reminder (P2)
 1. More → Reminders → switch on, choose time (default 8:00 pm) → permission explainer → system permission.
@@ -134,8 +135,14 @@ See flow 2. Reset app erases the database and settings; a backup file can then b
 1. In another app share text to Pocketbook → the lock screen if on → **Add** opens prefilled using the quick-add rules; the user taps Save.
 
 ## 27. Capture setup (P4, Pro)
-- Android: More → Allowed senders → Add sender → permission explainer → notification access (SMS only if added later) → pick account and default category → messages appear in **Review entries**.
-- iPhone: More → Allowed senders → "Set up Shortcuts" guide → the Shortcut sends message text to the app, which creates a review card.
+- Android: More → Allowed senders → **Add sender** → permission explainer → notification access (SMS only if added later) → sender name or number, account, optional default category → messages appear in **Review entries**. A sender's switch pauses reading.
+- iPhone: More → Allowed senders shows the **On iPhone** steps (Shortcuts → New automation → Message → Run "Add to Pocketbook"); each message creates a review card.
+
+## 28. Turn App lock on, off, or change the PIN
+1. More → Security → **App lock** on → **Create a PIN** → **Confirm PIN** (no Skip here; Back cancels and the switch returns to off).
+2. App lock off → ask for the PIN (or biometric) → lock removed and the stored PIN deleted.
+3. Change PIN (row not drawn): verify with biometric if on, else the current PIN → Create a PIN → Confirm PIN.
+4. **Face ID or fingerprint** switch: only enabled while App lock is on; turning it on shows the system prompt.
 
 ## Reachability check (every screen)
-Welcome 1 · Lock 2 · Home (tab) · Add 3, 5, 6 · History (tab) 7 · Detail 7 · Accounts 6, 21 · Categories 22 · Budgets 8 · Recurring 9 · Review entries 14 · Reports 17 · Trends 17 · Debts 10, 11 · Debt detail 10 · Paid on behalf 13 · Split a bill 12 · Split detail 12 · More (tab) 19 · Backup and export 15, 16 · Pro 18, 20.
+Welcome 1 · Lock 2 · Home (tab) · Add 3, 5, 6 · History (tab) 7 · Detail 7 · Accounts 6, 21 · Categories 22 · Budgets 8 · Recurring 9 · Review entries 14 · Reports 17 · Trends 17 · Debts 10, 11 · Debt detail 10 · Paid on behalf 13 · Split a bill 12 · Split detail 12 · More (tab) 19 · Backup and export 15, 16 · Pro 18, 20 · Create a PIN 1, 28 · Confirm PIN 1, 28 · Forgot PIN 2 · Allowed senders 14, 27 · New account 21 · New category 22 · New budget 8 · New recurring item 9 · Add debt 10, 11.
