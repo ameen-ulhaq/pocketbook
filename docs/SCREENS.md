@@ -20,7 +20,7 @@ Phase column: P1 = Core, P2 = Insights, P3 = People and money, P4 = Advanced (se
 - **Success feedback:** a short toast ("Saved", "Deleted", "Backed up") and return to the previous screen.
 - **Empty states:** one line that says what goes here and a primary button to add the first item.
 - **Text size and RTL:** layouts must survive large system text and right-to-left languages.
-- **Phase gating:** several P1 screens draw elements from later phases. Build them in their own phase and hide them until then: Home quick add line (P2), Home debt boxes (P3), Home bell (P4), Add's On behalf link (P3), Detail's Duplicate (P1) and Repeats row (P2), Settings rows for Recurring and Budgets (P2), Debts and Splits (P3), Pro banner and Allowed senders (P4), Reports tab and Reports export icon (P2), Theme row (only if dark tokens exist). In P1 the Reports tab opens a plain "Reports arrive in a later update" placeholder; it is removed from release builds until P2 is done.
+- **Phase gating:** several P1 screens draw elements from later phases. Build them in their own phase and hide them until then: Home quick add line (P2), Home debt boxes (P3), Home bell (P4), Add's On behalf link (P3), Detail's Duplicate (P1) and Repeats row (P2), Settings rows for Recurring and Budgets (P2), Debts and Splits (P3), Pro banner and Allowed senders (P4), Reports tab and Reports export icon (P2). In P1 the Reports tab opens a plain "Reports arrive in a later update" placeholder; it is removed from release builds until P2 is done.
 - **Free limits and Pro:** read through the `Entitlements` service (SPEC). A blocked action opens Pro with the reason line ("You have 3 open splits. Settle one or unlock Pro.").
 - **Notifications:** the first time a feature needs them (budget alert, reminder, backup reminder) show a one-line explanation, then the system permission. If denied, features still work and Settings shows "Notifications are off" with a link to system settings.
 - **Sample data in the static screens is illustrative only** and is not always internally consistent (see the "Known sample slips" list at the end).
@@ -199,7 +199,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 **Actions**
 - Add saves exactly as parsed. If no category was found ("Uncategorized") Add opens Add prefilled instead, because a category is required. Edit opens Add prefilled. Ignore removes it from the list (kept hidden so the same message is not offered again).
 - Each allowed sender is tied to one account (the account the message is about) and an optional default category; the card shows that account. The same message is never offered twice.
-- Android reads SMS and notifications from allowed senders; iPhone gets entries from a Shortcuts automation. See `docs/SPEC.md`.
+- Android reads notifications from allowed senders (SMS is an optional later addition, only if the store allows it); iPhone gets entries from a Shortcuts automation. See `docs/SPEC.md`.
 - Empty state: "No messages waiting." Reached from the bell when the badge shows, and from More → Allowed senders → Review entries (the bell is hidden at 0).
 
 ## 12. Reports: where it went (`ReportsOverview.html`, route `/reports`, P2)
@@ -308,29 +308,29 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 **Elements**
 - Title "More".
 - **Pocketbook Pro** banner (gold star on dark): "One payment, yours for life" → Pro.
-- **General:** Language, Currency, Month starts on (day 1–28), Theme (System, Light, Dark).
+- **General:** Language, Currency, Month starts on (day 1–28). There is no Theme row in v1 (light only); the static screen draws one, leave it out.
 - **Security:** App lock switch, Face ID or fingerprint switch.
 - **Money:** Recurring items, Budgets, Categories, Accounts.
 - **Data and capture:** Backup and export, Allowed senders (count, P4).
 - **Not drawn, to add (GAPS):** Debts and Splits shortcuts (P3), Reminders (daily "log your day"), Auto-lock time, Change PIN, About and help, Delete all data.
 
 **Rules**
-- Changing currency after data exists only changes how amounts display and new entries; it does not convert history (warn clearly). Real multi-currency is Pro (P4).
+- **Currency is locked once any entry exists** (any transaction, debt or split). Until then it can be changed freely. When locked the row is read-only, shows no chevron, and a line under it says "Currency can't be changed once you have entries." The only way to change it is Delete all data and set up again (back up first). Pro (P4) adds accounts in other currencies; the base currency stays as chosen.
 - Turning App lock on asks the user to create a PIN; turning it off asks for the PIN.
-- Theme Dark requires a dark token set (see GAPS).
 
 ## 20. Backup and export (`Backup.html`, route `/backup`, P1 backup, P2 export)
 
 **Elements**
 - Back, title.
 - **Last backup** card: time, size, a "Safe" pill (green) when the last backup is under 14 days old; an amber "Old" pill after that; an amber "No backup yet" pill if never. Time and size come from the last backup made on this phone.
+- **Plain-file note** under the buttons (not yet drawn): "Backups are not encrypted. Anyone with the file can read your data, so keep it somewhere private."
 - **Back up now**: creates one file (all data, no PIN) and opens the share/save sheet.
 - **Restore from a file**: file picker, then confirm "This replaces everything on this phone with the backup." Cancel / Replace. After success the app restarts at Home.
 - **Weekly backup reminder** switch (day and time, default Sunday 9 pm).
 - **Export** section: **Range** (month picker or custom), **Format** (CSV spreadsheet or PDF report), **Export report** (Pro) which opens the share sheet.
 
 **Rules**
-- The file is not encrypted, so the card says "Anyone with this file can read your data." (optional password: GAPS decision). File name `pocketbook-YYYY-MM-DD`. Backup is a SQLite copy with a `schema_version`; restoring an older file migrates it up; restore refuses files from a newer app version with a clear message.
+- The file is not encrypted, so the card says "Anyone with this file can read your data." (optional password is a possible later release). File name `pocketbook-YYYY-MM-DD`. Backup is a SQLite copy with a `schema_version`; restoring an older file migrates it up; restore refuses files from a newer app version with a clear message.
 - Restore never touches the PIN or lock setting. After restore, reminders and notifications are rescheduled and recurring catch-up runs.
 - Free users see Export report with a small "Pro" tag; tapping it opens Pro (not drawn). Backup and restore are always free.
 - Errors (cannot read file, not a Pocketbook file, file from a newer version, disk full) show one line with Try again.
@@ -339,7 +339,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 
 **Elements**
 - Back, logo, "Pocketbook Pro", "Pay once. Keep it forever. No subscription."
-- Feature list with checks: Unlimited splits and debts (free includes 3 of each); Auto-capture from SMS and Shortcuts; Multiple currencies; CSV and PDF export; Home-screen widget.
+- Feature list with checks (the static copy says "Auto-capture from SMS and Shortcuts"; change it to "notifications and Shortcuts" until SMS is approved): Unlimited splits and debts (free includes 3 of each); Auto-capture from SMS and Shortcuts; Multiple currencies; CSV and PDF export; Home-screen widget.
 - Note: "Free keeps everything else: tracking, budgets, reports, backup."
 - **Unlock Pro · [ONE-TIME PRICE]** and **Restore purchase**.
 
@@ -361,4 +361,4 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - Accounts: the Cash card says "Wallet" instead of "Cash · USD".
 - Debts: lists 6 debts, more than the 3 free loans; it is a Pro or sample view. Split shares do not count.
 - Trends: stat label is "Saved this month" even when the chips can change the period.
-- Settings: the Theme row exists but there is no dark token set.
+- Settings: draws a Theme row; v1 is light only, so omit it.

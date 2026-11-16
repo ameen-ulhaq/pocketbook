@@ -100,9 +100,9 @@ Same as 10 with "I borrowed". The payment form says **From** and reduces the cho
 3. New phone or reinstall: **Restore purchase**.
 
 ## 19. Change settings
-- Language, Theme: apply immediately.
+- Language: applies immediately.
 - Month starts on: reports, budgets and Home month totals recalculate; a note says history is unchanged.
-- Currency: display change only (warn); real multi-currency is Pro.
+- Currency: changeable only until the first entry exists; after that the row is read-only (Delete all data and set up again to change it). Real multi-currency is Pro.
 - Auto-lock, Change PIN, Daily reminder: in More (see GAPS for the unplanned rows).
 - App lock: on → create PIN; off → ask PIN.
 
@@ -134,7 +134,7 @@ See flow 2. Reset app erases the database and settings; a backup file can then b
 1. In another app share text to Pocketbook → the lock screen if on → **Add** opens prefilled using the quick-add rules; the user taps Save.
 
 ## 27. Capture setup (P4, Pro)
-- Android: More → Allowed senders → Add sender → permission explainer → system permission for notifications or SMS → pick account and default category → messages appear in **Review entries**.
+- Android: More → Allowed senders → Add sender → permission explainer → notification access (SMS only if added later) → pick account and default category → messages appear in **Review entries**.
 - iPhone: More → Allowed senders → "Set up Shortcuts" guide → the Shortcut sends message text to the app, which creates a review card.
 
 ## Reachability check (every screen)

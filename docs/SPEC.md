@@ -10,10 +10,19 @@ A simple, complete personal expense app for everyone, in any region. Works offli
 - Easiest storage: local SQLite on the device, with one-tap backup and restore to a file the user keeps (Drive, iCloud, email, WhatsApp).
 - Cloud sync and live shared groups are not in v1.
 - Desktop (NativePHP Desktop) comes later; phone and desktop would exchange data through the backup file.
-- Reducing manual entry: share-to-add, one-line quick entry ("lunch 4.50 cash"), one-tap repeats, recurring auto-posting, CSV statement import, home widget, daily reminder. Android only: read SMS and notifications from allowed senders into a review list. iPhone: Shortcuts automation that passes message text to the app. Nothing is saved without the user tapping Add. CSV statement import is built in Phase 2 after export (free); `CLAUDE.md` phase list should add it there.
+- Reducing manual entry: share-to-add, one-line quick entry ("lunch 4.50 cash"), one-tap repeats, recurring auto-posting, CSV statement import, home widget, daily reminder. Android only: read notifications from allowed senders into a review list first; reading SMS is an optional later addition, only if Google Play allows it. iPhone: Shortcuts automation that passes message text to the app. Nothing is saved without the user tapping Add. CSV statement import is built in Phase 2 after export (free).
 - Free vs Pro: free has tracking, budgets, reports, backup and up to 3 splits and 3 debts. Pro (one purchase) unlocks unlimited splits and debts, auto-capture, multi-currency, CSV and PDF export, home widget. Every Pro feature runs on the phone so a lifetime price is sustainable. Price is a placeholder.
 - **Free limits count open items.** The free tier allows 3 open (not settled) splits and 3 open loans. Loans means debts of kind `loan` or `installment` only; debts created by a split (`split_share`), paid on behalf (`on_behalf`) and held money (`held`) never count toward the debt limit. Settling or deleting one frees a slot. Existing data is never removed or locked (for example after a restore); only adding the 4th is blocked.
 - **Building before Pro exists (phases).** Export (P2) and the limits (P3) are built behind one `Entitlements` service that returns "Pro" in development builds until the purchase is built in P4. No feature code checks the store directly.
+
+## Owner decisions (v1)
+
+- Free limits count open (not settled) items only.
+- Recurring transfers are not allowed in v1.
+- Backups are plain, unencrypted files; the Backup screen says so.
+- Android capture reads notifications first; SMS is optional and later.
+- v1 is light-only: there is no Theme setting.
+- The currency cannot be changed once any entry exists. It is chosen at setup. (Pro, P4, adds accounts in other currencies; the base currency stays the one chosen at setup.)
 
 ## Features
 
@@ -35,7 +44,7 @@ A simple, complete personal expense app for everyone, in any region. Works offli
 
 **Paid on behalf:** (a) I paid for someone: not my expense, shows as owed to me. (b) Holding money for someone: money received in my account that I must pay out is not income and clears when paid out.
 
-**Settings:** language (RTL ready), currency, month start day (payday), theme, app lock (PIN + biometric), recurring, budgets, categories, accounts, backup and export, allowed senders.
+**Settings:** language (RTL ready), currency, month start day (payday), app lock (PIN + biometric), recurring, budgets, categories, accounts, backup and export, allowed senders.
 
 ## Money rules
 
@@ -57,7 +66,7 @@ A simple, complete personal expense app for everyone, in any region. Works offli
 
 ## Data model (draft)
 
-- `settings(key, value)`: language, currency, month_start_day, theme, last_backup_at, reminder times. Security settings are not stored here.
+- `settings(key, value)`: language, currency, month_start_day, last_backup_at, reminder times. Security settings are not stored here.
 - `accounts(id, name, type, currency, opening_balance_minor, archived)`
 - `categories(id, name, kind, icon, parent_id, sort, archived)`: `kind` is expense or income; a subcategory inherits its parent's kind; one level deep.
 - `transactions(id, type, amount_minor, currency, account_id nullable, to_account_id, category_id, occurred_on, note, source, split_id, debt_id, recurring_id, capture_id, created_at, updated_at)`
