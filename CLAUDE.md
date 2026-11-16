@@ -5,10 +5,10 @@ Pocketbook is a simple personal expense manager for iPhone and Android, for any 
 ## Read these first, in this order
 
 1. `docs/SPEC.md`: product decisions, features, money rules, data model, phases.
-2. `docs/SCREENS.md`: every one of the 21 designed screens with every element, option, action, state and rule.
+2. `docs/SCREENS.md`: every one of the 39 designed screens with every element, option, action, state and rule.
 3. `docs/FLOWS.md`: step-by-step user journeys.
 4. `docs/GAPS.md`: what the design does not draw yet, with recommended defaults and open decisions.
-5. `docs/design/`: tokens (`tokens.json`, `tokens.css`), the 21 screens as static HTML (`screens/index.html`), and the component guidelines and previews (`components/`).
+5. `docs/design/`: tokens (`tokens.json`, `tokens.css`), the 39 screens as static HTML (`screens/index.html`), and the component guidelines and previews (`components/`).
 
 Online (private to the owner, may not open for you): screens https://claude.ai/artifact/McKtWDuTK1kgQKSnffzJrs and design system https://claude.ai/artifact/JkVyy5F7v7a6TFdGPV2Tnc. The files in `docs/design/` are the portable copy and win if they differ.
 
@@ -33,7 +33,7 @@ Online (private to the owner, may not open for you): screens https://claude.ai/a
 ## Phases
 
 1. **Core:** setup, PIN/biometric lock, accounts, categories, add/edit/delete transactions, history with search and filter, home, detail, settings, backup and restore.
-2. **Insights:** budgets with alerts, recurring items, reports and charts, CSV/PDF export, one-line quick entry.
+2. **Insights:** budgets with alerts, recurring items, reports and charts, CSV/PDF export, CSV statement import, one-line quick entry.
 3. **People and money:** debts, shared expenses and bill splitting, paid-on-behalf entries.
 4. **Advanced:** lifetime Pro purchase, share-to-add, home-screen widget, multi-currency, Android auto-capture of SMS/notifications, iPhone Shortcuts action.
 
