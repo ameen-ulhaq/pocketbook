@@ -19,7 +19,7 @@ Restore link on Welcome; Create PIN, Confirm PIN (error state), Forgot PIN; Forg
 | App-switcher privacy cover [P1] | Hide balances in the app switcher; Android secure window | Default |
 | Currency lock [P1] | Currency is read-only once any entry exists (see Resolved decisions) | Default |
 | Language and currency pickers [P1] | Searchable lists | Default |
-| Numerals for Arabic and Urdu [P1] | Show Western digits (0–9) or locale digits? Recommended: Western digits in v1 for input reliability | Decide |
+| Numerals [P1] | Western digits (0–9) in every language for v1 (decided) | Default |
 
 ## Pickers and sheets
 Category picker (with subcategories, search, New category); Account picker (with balances and a "No account" option on Add debt); Date picker; Month picker; Custom date-range picker; Person picker (with Add person); Day-of-month picker (1–28 for month start; 1–31 for recurring); Repeats, On day and Remind pickers on New recurring item; Inside (parent) picker on New category; Filter sheet in History (account, category, amount range; lives in the month chip's sheet); Share sheet (system); Discard-changes confirm; Upcoming (future-dated) marker. All Default; none drawn.
@@ -33,7 +33,7 @@ Category picker (with subcategories, search, New category); Account picker (with
 - **Date row on Add debt** (Debt detail shows "Lent 12 Oct", the form has no date). **Design**
 - **Date and Category rows on Split a bill.** **Design**
 - **Tags on Add** (free-text chips). **Design**
-- Full icon set for categories: only 8 icons are drawn. **Decide** the final list (recommended ~24 neutral glyphs covering the default categories).
+- Full icon set for categories: only 8 icons are drawn; the list of about 24 is under "Category icon set". **Design** (draw the other 16)
 
 ## Detail screens not drawn
 Account detail (balance, its transactions, edit, adjust, archive, delete when empty; the Accounts cards have no link yet); Category detail (month total, entries); CSV statement import (choose file, map columns once, preview, skip duplicates); Share-to-add (receive text, show parsed Add screen) [P4]; Recurring item detail; Person detail (all debts and splits with that person); Debt/Split "⋯" menus. Default.
@@ -99,10 +99,20 @@ These depend on what NativePHP Mobile supports today; check the docs and licence
 8. Debt installments are kept: an optional Installment row on Add debt, for money the user owes only.
 9. Forgot PIN is designed as two options: biometric, or erase and start over (then restore from a backup). Erase asks for confirmation.
 
+9. Backup status: "Safe" for 14 days, then an amber "Old" pill.
+10. Digits: Western digits (0–9) in every language for v1, on screens, keypads and backups.
+11. Languages: ship English first, then Urdu and Arabic. All text goes through language files from day one so right-to-left can be tested early; Spanish and French from the setup list wait until after those.
+12. App name: Pocketbook for now. The name lives in one config value so it can change.
+13. Pro price: decided at the start of Phase 4; until then the Pro screen keeps the placeholder.
+14. Category icons: about 24, picked from the existing icon set (neutral line glyphs on `surface-tint` tiles, `accent` stroke). The list is under "Category icon set" below.
+15. Allowed senders on iPhone shows only the Shortcuts guide: no sender list and no Add sender button (the rules in SCREENS 25 already say this).
+
+## Category icon set (about 24)
+Stored by name in `categories.icon`. The first eight are drawn in the New category grid; the rest are drawn in the same style from the same set.
+1. fork-knife (food) · 2. car (transport) · 3. bag (shopping) · 4. bolt (bills) · 5. heart (health) · 6. book (education) · 7. ticket (fun) · 8. gift
+9. home (rent and home) · 10. basket (groceries) · 11. cup (tea, coffee) · 12. wifi (internet) · 13. phone (mobile) · 14. fuel-pump · 15. shirt (clothes) · 16. pill (medicine)
+17. repeat (subscriptions) · 18. banknote (salary, income) · 19. briefcase (freelance) · 20. graduation-cap (fees) · 21. bus (rides) · 22. paw (pets) · 23. plane (travel) · 24. dots (other)
+Default categories use these: Rent and home → home, Food → fork-knife, Groceries → basket, Dining → fork-knife, Tea → cup, Bills → bolt, Electricity → bolt, Internet → wifi, Mobile → phone, Transport → car, Fuel → fuel-pump, Rides → bus, Shopping → bag, Clothes → shirt, Household → home, Health → heart, Doctor → heart, Medicine → pill, Education → book, Fees → graduation-cap, Books → book, Fun → ticket, Outings → ticket, Subscriptions → repeat, Salary → banknote, Freelance → briefcase, Gifts → gift, Other → dots.
+
 ## Open decisions for the owner
-1. App name and logo. "Pocketbook" is a placeholder.
-2. Pro price and store product ID.
-3. Languages to ship first. The setup screen lists English, Urdu, Arabic, Spanish and French; recommended v1 is English plus Urdu and Arabic to test right-to-left early. All text goes through language files from day one either way.
-4. Numerals for Arabic and Urdu (default: Western digits).
-5. Backup staleness: "Safe" for 14 days, then amber "Old" (default; change if wanted).
-6. The final category icon list.
+None. The next decisions come with the work: the Pro price at the start of Phase 4, and a later check of Urdu and Arabic layouts when those languages are added.

@@ -1,5 +1,15 @@
 # Changelog
 
+## Owner decisions: v1 details (2026-11-16)
+- Backup shows "Old" (amber) after 14 days, "Safe" before.
+- Western digits (0–9) in all languages for v1.
+- Language order: English first, then Urdu and Arabic.
+- App name stays Pocketbook for now.
+- Pro price is decided at the start of Phase 4.
+- Category icons: about 24 from the existing icon set; the list and the default mapping are in GAPS.
+- Allowed senders on iPhone shows only the Shortcuts guide.
+- GAPS: these moved to Resolved decisions 9–15; the open decisions list is now empty.
+
 ## Decision: debt installments (2026-11-16)
 - Kept. Add debt gets an optional Installment row (I borrowed, with an account). It creates a recurring debt payment that posts a `debt_out` payment each due date, capped at the remaining balance, and stops at zero. No installments for money the user lent. Updated SCREENS 14, 28 and 30, FLOWS 11, GAPS (moved to resolved; the row still needs drawing).
 
