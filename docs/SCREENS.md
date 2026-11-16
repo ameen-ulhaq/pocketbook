@@ -184,7 +184,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - **New recurring item** button.
 
 **Rules**
-- Frequencies: daily, weekly, monthly, yearly; day of month (1–31; on short months it posts on the last day) or weekday; optional reminder N days before. Types: expense or income. A debt installment is a third type (payment on a debt) that the drawn form does not offer yet (GAPS).
+- Frequencies: daily, weekly, monthly, yearly; day of month (1–31; on short months it posts on the last day) or weekday; optional reminder N days before. Types: expense or income. A debt installment is a third, internal type (payment on a debt). It is created from Add debt (screen 30), not from this form, and appears in this list with the debt's person as its name.
 - Transfers cannot be recurring in v1.
 - On app open (and by background task where available) every due occurrence is posted, oldest first, with date = due date, each exactly once (a due date can never post twice). If the account was archived the item is paused with a note. The catch-up also runs after a restore.
 - Item form: screen 28 (New recurring item). Tapping a card opens the same form in edit mode.
@@ -241,7 +241,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 **Actions**
 - Tap a loan, installment, on-behalf or held row → Debt detail. Tap a split row → Split detail.
 - A **Split a bill** secondary button sits next to Add debt (drawn) and opens Split a bill. The other entry is More → Debts and splits, which opens this screen.
-- Add debt form: screen 30. Direction (I lent / I borrowed), person, amount, due date, account (or "No account"), note. If an account is chosen it creates a `debt_out`/`debt_in` entry that is not an expense or income; with "No account" only the debt is recorded. The installment amount and a date are not in the drawn form (GAPS).
+- Add debt form: screen 30. Direction (I lent / I borrowed), person, amount, due date, account (or "No account"), note. If an account is chosen it creates a `debt_out`/`debt_in` entry that is not an expense or income; with "No account" only the debt is recorded. Owner decision: the form gets an optional **Installment** row (not drawn yet, GAPS), see screen 30. A date row is also not drawn.
 - Free tier: 3 open loans and 3 open splits (SPEC defines what counts); the 4th shows Pro with the reason. Adding a debt (screen 30) or a split counts here.
 - Reminders: if a due date is set, a local notification on the due date at 9:00.
 
@@ -480,6 +480,7 @@ Opened from Debts → Add debt.
 **Elements**
 - Back arrow (to Debts), title "Add debt", segmented **I lent / I borrowed**.
 - Fields: **Person** (picker with Add person), **Amount**, **Due date** (optional), **From account** (reads **Into account** for I borrowed), **Note**.
+- **Installment** row (decided, not drawn): shown only for I borrowed with an account chosen. Tapping it asks for the monthly amount and the day of month; empty means no installment. Shown on Debts as "Installment $50 monthly".
 - Helper: "Money you lend leaves the account but is not an expense. Choose "No account" if the money did not pass through one."
 - **Save debt** (primary).
 
@@ -487,7 +488,8 @@ Opened from Debts → Add debt.
 - Amount greater than 0. Person required. The account picker has a "No account" option.
 - With an account, a `debt_out` (lent) or `debt_in` (borrowed) entry is created dated today. With no account, only the debt exists and no balance changes.
 - Free tier: the 4th open loan opens Pro instead.
-- A due date adds a due pill on Debts and a reminder on the due date. Not drawn: a Date row (DebtDetail shows "Lent 12 Oct"), so use today until it is designed, and the optional installment amount.
+- A due date adds a due pill on Debts and a reminder on the due date. Not drawn: a Date row (DebtDetail shows "Lent 12 Oct"), so use today until it is designed, and the Installment row.
+- **Installment rules:** saving creates a recurring item of type debt payment linked to the debt (`recurring.debt_id`), paid from the chosen account, reminder 1 day before. Each due date posts a `debt_out` payment for the installment amount, or the remaining balance if smaller; when the debt reaches zero the item stops. Editing or deleting the debt updates or removes it. Installments are only for money the user owes; for I lent there is no row, so money is never auto-recorded as received.
 
 
 ---

@@ -1,5 +1,8 @@
 # Changelog
 
+## Decision: debt installments (2026-11-16)
+- Kept. Add debt gets an optional Installment row (I borrowed, with an account). It creates a recurring debt payment that posts a `debt_out` payment each due date, capped at the remaining balance, and stops at zero. No installments for money the user lent. Updated SCREENS 14, 28 and 30, FLOWS 11, GAPS (moved to resolved; the row still needs drawing).
+
 ## Design update: 9 new screens, 4 changed screens (2026-11-16)
 
 Read from the design canvas and re-audited every doc against all 30 screens.

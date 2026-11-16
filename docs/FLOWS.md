@@ -65,6 +65,7 @@ Each flow lists the steps in order, the screen at each step, and the rule that m
 
 ## 11. Borrow money and repay
 Same as 10 with "I borrowed". The payment form says **From** and reduces the chosen account.
+Optional: set an **Installment** (amount and day of month) on Add debt. On each due date the payment is posted automatically from that account, a reminder fires the day before, and it stops at zero. It also shows in More → Recurring items.
 
 ## 12. Split a bill and collect
 1. More → **Debts and splits** → **Split a bill** (the same button is on Debts).

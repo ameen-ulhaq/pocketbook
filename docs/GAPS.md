@@ -48,7 +48,7 @@ Account detail (balance, its transactions, edit, adjust, archive, delete when em
 - **Theme row** is still drawn on More; v1 is light-only, so omit it. **Design** (remove)
 - **Auto-lock, Change PIN, Reminders, About and help, Delete all data** rows on More. **Design**
 - Delete debt/split and Edit in a menu; Remind setting. Default
-- **Installment** on Add debt: Debts shows "Installment $50 monthly" but no form creates one. **Decide** (recommended: an optional "Installment" row on Add debt that creates a recurring debt payment; or drop installments from v1)
+- **Installment row on Add debt** (decided): optional, only for I borrowed with an account; creates a recurring debt payment. **Design** (not drawn)
 
 ## Rules that were missing or contradictory (now written)
 - Month naming when the start day is not 1 (named by the month it starts in). Default
@@ -96,7 +96,8 @@ These depend on what NativePHP Mobile supports today; check the docs and licence
 5. v1 is light-only. The Theme row is removed from the Settings spec (the static screen still draws it, omit it); dark tokens wait for a later release.
 6. Currency cannot be changed once any entry exists; it is set at setup. Changing it means Delete all data and starting again.
 7. CSV statement import is Phase 2 (also written in `CLAUDE.md`).
-8. Forgot PIN is designed as two options: biometric, or erase and start over (then restore from a backup). Erase asks for confirmation.
+8. Debt installments are kept: an optional Installment row on Add debt, for money the user owes only.
+9. Forgot PIN is designed as two options: biometric, or erase and start over (then restore from a backup). Erase asks for confirmation.
 
 ## Open decisions for the owner
 1. App name and logo. "Pocketbook" is a placeholder.
@@ -104,5 +105,4 @@ These depend on what NativePHP Mobile supports today; check the docs and licence
 3. Languages to ship first. The setup screen lists English, Urdu, Arabic, Spanish and French; recommended v1 is English plus Urdu and Arabic to test right-to-left early. All text goes through language files from day one either way.
 4. Numerals for Arabic and Urdu (default: Western digits).
 5. Backup staleness: "Safe" for 14 days, then amber "Old" (default; change if wanted).
-6. Debt installments: add an Installment row to Add debt, or drop installments from v1.
-7. The final category icon list.
+6. The final category icon list.
