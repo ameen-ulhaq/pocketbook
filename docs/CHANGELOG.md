@@ -1,5 +1,26 @@
 # Changelog
 
+## Design update: 9 new screens, 4 changed screens (2026-11-16)
+
+Read from the design canvas and re-audited every doc against all 30 screens.
+
+**Added to the docs**
+- `docs/SCREENS.md`: screens 22 to 30 (Create PIN, Confirm PIN, Forgot PIN, Allowed senders, New account, New category, New budget, New recurring item, Add debt), each with elements, behavior and rules; updated Welcome, Lock, Debts and More; screen count 21 → 30 in CLAUDE.md, SPEC, SCREENS, GAPS, KICKOFF and design README.
+- `docs/FLOWS.md`: first launch now includes Create/Confirm PIN; Forgot PIN and Erase flow; budget, recurring, debt, account and category flows use the new forms; new flow 28 (App lock on/off and Change PIN); reachability check lists all 30.
+- `docs/SPEC.md`: screen rows 5 and 6; `budgets.alerts_on`; account types.
+- `docs/design/screens/`: static HTML for the 9 new screens plus the changed Welcome, Lock, Debts and More; index rebuilt with all 30.
+- `docs/GAPS.md`: "Drawn since the first audit" list; items now designed removed from the needs-a-design lists; Forgot PIN moved to Resolved.
+
+**New findings from the new screens (all in GAPS)**
+- Installments: Debts shows one but no form can create it. Decision needed.
+- Add debt has no Date row; Split a bill still has no Date or Category row.
+- Allowed senders has no link to Review entries, no Add sender form, no iPhone-only layout.
+- Forgot PIN has no biometric-off state and no erase confirmation; Change PIN is not in More and must accept biometric.
+- Confirm PIN is drawn only in its error state.
+- Category icon grid shows 8 icons; the final set must be listed.
+- The Welcome restore link opens the Backup screen in the design; build a direct file picker.
+- Not changed in the canvas and still needing design: Duplicate (Detail), Tags (Add), Date and Category (Split a bill), period arrows (Reports), backup note and Pro tag (Backup), Pro screen copy, removing the Theme row, and the Auto-lock, Change PIN, Reminders, About and Delete all data rows.
+
 ## Owner decisions applied (2026-11-16)
 - Free limits count open items only (was Decide; now written as final in SPEC and GAPS).
 - Recurring transfers are not allowed in v1 (final).
