@@ -1,11 +1,13 @@
 # Pocketbook: what the design does not show yet
 
-The 30 designed screens cover the main path and the setup, PIN, capture and add/edit forms. Everything below is needed for a complete app but is not drawn. For each: what it must do, and a recommended default so it can be built. Build these with the design system tokens and the existing patterns (Field rows, Chips, Buttons, Cards). Mark a design request in your report so the owner can have it designed.
+The 39 designed screens cover the main path, setup, PIN, capture, add/edit forms and the settings pages. Everything below is needed for a complete app but is not drawn. For each: what it must do, and a recommended default so it can be built. Build these with the design system tokens and the existing patterns (Field rows, Chips, Buttons, Cards). Mark a design request in your report so the owner can have it designed.
 
 Status key: **Decide** = needs the owner's call (a default is given so work is not blocked); **Default** = safe to build as described. **Design** = a drawn screen or change is needed before the owner would call it finished; the default is to build it from existing components in the meantime. Phase in brackets.
 
 ## Drawn since the first audit (no longer gaps)
 Restore link on Welcome; Create PIN, Confirm PIN (error state), Forgot PIN; Forgot PIN? link on Lock; Allowed senders (Android list, iPhone steps); New account, New category, New budget, New recurring item, Add debt; Split a bill button and the Overdue pill on Debts; "Debts and splits" row in More; Allowed senders opens its screen. They are written up as SCREENS 22–30.
+
+Drawn in the third update: Choose an icon (24 icons), Auto-lock, Reminders, About and help, Erase everything (type ERASE), Add sender with a message test, Auto-capture on iPhone, Forgot PIN with no biometrics, Change PIN; More now has Reminders, Auto-lock, Change PIN, About and help and Delete all data; New category links to the icon picker; the Pro tag colors are now the tokens `gold-tint` and `gold-ink`.
 
 Drawn in the second update: Tags row on Add; Duplicate on Detail; Date and Category rows on Split a bill; period arrows on Reports; the not-encrypted note and Pro tag on Backup and export; Theme row removed; Review entries button on Allowed senders; Date and Installment rows on Add debt; Pro copy "notifications and Shortcuts".
 
@@ -13,10 +15,10 @@ Drawn in the second update: Tags row on Add; Duplicate on Detail; Date and Categ
 | Item | Needed behavior | Status |
 | --- | --- | --- |
 | Normal Confirm PIN state [P1] | The static screen shows only the error state; build the normal state with accent dots and no message | Default |
-| Biometric-off state on Forgot PIN [P1] | Hide the Face ID card and button; say it is not set up; only Erase remains | Default · Design |
-| Erase confirm [P1] | "Erase everything? This deletes all data on this phone and cannot be undone." Cancel / Erase | Default · Design |
-| Change PIN [P1] | A row in More → Security: verify with biometric if on, else the current PIN, then Create and Confirm | Default · Design |
-| Auto-lock time [P1] | Immediately, 1 minute, 5 minutes (default 1 minute); a row in Security | Default · Design |
+| Biometric-off state on Forgot PIN [P1] | Drawn (screen 38) | Done |
+| Erase confirm [P1] | Drawn (screen 35, type ERASE) | Done |
+| Change PIN [P1] | Drawn (screen 39) | Done |
+| Auto-lock time [P1] | Drawn (screen 32): Immediately, 1, 5 or 15 minutes; default 1 | Done |
 | Lockout schedule [P1] | 30 s after 5 wrong tries, 1 min after 10, 5 min after 15, then 15 min per 5; kept across app restarts | Default |
 | App-switcher privacy cover [P1] | Hide balances in the app switcher; Android secure window | Default |
 | Currency lock [P1] | Currency is read-only once any entry exists (see Resolved decisions) | Default |
@@ -29,26 +31,22 @@ Category picker (with subcategories, search, New category); Account picker (with
 ## Forms and states of drawn forms not drawn
 - Edit modes of New account, New category, New budget and New recurring item (titles "Edit …", Archive/Delete/Adjust balance, pause). Default
 - Edit debt (due date, note, installment); edit or delete split; Add person; Adjust account balance. Default
-- Add sender (name or number, account, optional default category), Android notification-access explainer and "access is off" state, iPhone-only version of Allowed senders (no list, "Open Shortcuts"). **Default · Design**
 - Free-tier Currency row on New account (read-only, no chevron). Default
 - Validation and error states of every form (empty name, duplicate name, zero amount, split not adding up). Default
-- Full icon set for categories: only 8 icons are drawn; the list of about 24 is under "Category icon set". **Design** (draw the other 16)
 
 ## Design still needed (short list)
-- **Pro tag colors:** the Backup screen uses `#F6EBCF` (fill) and `#7A5B12` (text), which are not tokens. Add `gold-tint` and `gold-ink` to `tokens.json` and the design system, and check contrast. **Design**
-- **Allowed senders on iPhone:** guide only (no list, no Add sender, no How a message is read), with an "Open Shortcuts" button. **Design**
-- **More rows:** Auto-lock, Change PIN, Reminders, About and help, Delete all data. **Design**
-- **Forgot PIN:** biometric-off state and the erase confirmation. **Design**
-- **Add sender form** and the Android "notification access is off" state. **Design**
-- **Category icons:** draw the other 16 of the 24 (see "Category icon set"). **Design**
-- **Edit modes** of the drawn forms. Default
+- **Add sender:** an **Account** row (which account the messages belong to) and an optional default category. The drawn form has neither, so a captured entry uses the last used account until they exist. **Design**
+- **Android capture states:** the "notification access is off" state on Allowed senders. **Design**
+- **Help and tips:** the page behind that row on About and help, and its text. **Design** and content
+- **Edit modes** of the drawn forms (account, category, budget, recurring, sender), with their Delete buttons. Default
+- **Time picker** for Reminders. Default
+- **Back and Cancel on Erase everything** return to the caller (More or Forgot PIN); the static links all go to More. Default
 
 ## Detail screens not drawn
 Account detail (balance, its transactions, edit, adjust, archive, delete when empty; the Accounts cards have no link yet); Category detail (month total, entries); CSV statement import (choose file, map columns once, preview, skip duplicates); Share-to-add (receive text, show parsed Add screen) [P4]; Recurring item detail; Person detail (all debts and splits with that person); Debt/Split "⋯" menus. Default.
 
 ## Elements the design does not show that the rules need
 - Pills on Detail and History for debt movements, adjustments and upcoming entries. Default
-- **Auto-lock, Change PIN, Reminders, About and help, Delete all data** rows on More. **Design**
 - Delete debt/split and Edit in a menu; Remind setting. Default
 
 ## Rules that were missing or contradictory (now written)
@@ -74,7 +72,7 @@ Account detail (balance, its transactions, edit, adjust, archive, delete when em
 - **Date change at midnight:** "Today" labels update when the app returns to the foreground.
 
 ## Settings additions
-Reminders (daily "log your day" time), Auto-lock, Change PIN, About and Help (version, privacy statement "all data stays on this phone", contact), Dark theme (later release: a `dark` theme in `tokens.json`, a contrast check, and the Theme row; not in v1), Delete all data (confirm twice).
+Dark theme (later release: a `dark` theme in `tokens.json`, a contrast check, and the Theme row; not in v1). Help and tips content and the Help page. The settings pages are drawn (SCREENS 32 to 35, 39).
 
 ## Pro and advanced [P4]
 Pro success state; Restore result messages; Multi-currency flow (account currency, manual exchange rates, base currency for totals, rates screen, transfers between currencies, per-currency debts); Home-screen widget (Add expense, balance); iPhone Shortcuts setup guide (in-app steps with a ready template); Android notification-listener permission explainer; CSV statement import (listed in SPEC but in no phase: it is now P2, after export).
@@ -105,15 +103,12 @@ These depend on what NativePHP Mobile supports today; check the docs and licence
 11. Languages: ship English first, then Urdu and Arabic. All text goes through language files from day one so right-to-left can be tested early; Spanish and French from the setup list wait until after those.
 12. App name: Pocketbook for now. The name lives in one config value so it can change.
 13. Pro price: decided at the start of Phase 4; until then the Pro screen keeps the placeholder.
-14. Category icons: about 24, picked from the existing icon set (neutral line glyphs on `surface-tint` tiles, `accent` stroke). The list is under "Category icon set" below.
+14. Category icons: 24, picked from the existing icon set and now drawn on Choose an icon. The list and the default mapping are under "Category icon set".
 15. Allowed senders on iPhone shows only the Shortcuts guide: no sender list and no Add sender button (the rules in SCREENS 25 already say this).
 
-## Category icon set (about 24)
-Stored by name in `categories.icon`. The first eight are drawn in the New category grid; the rest are drawn in the same style from the same set.
-1. fork-knife (food) · 2. car (transport) · 3. bag (shopping) · 4. bolt (bills) · 5. heart (health) · 6. book (education) · 7. ticket (fun) · 8. gift
-9. home (rent and home) · 10. basket (groceries) · 11. cup (tea, coffee) · 12. wifi (internet) · 13. phone (mobile) · 14. fuel-pump · 15. shirt (clothes) · 16. pill (medicine)
-17. repeat (subscriptions) · 18. banknote (salary, income) · 19. briefcase (freelance) · 20. graduation-cap (fees) · 21. bus (rides) · 22. paw (pets) · 23. plane (travel) · 24. dots (other)
-Default categories use these: Rent and home → home, Food → fork-knife, Groceries → basket, Dining → fork-knife, Tea → cup, Bills → bolt, Electricity → bolt, Internet → wifi, Mobile → phone, Transport → car, Fuel → fuel-pump, Rides → bus, Shopping → bag, Clothes → shirt, Household → home, Health → heart, Doctor → heart, Medicine → pill, Education → book, Fees → graduation-cap, Books → book, Fun → ticket, Outings → ticket, Subscriptions → repeat, Salary → banknote, Freelance → briefcase, Gifts → gift, Other → dots.
+## Category icon set (24, drawn on "Choose an icon")
+Stored by name in `categories.icon`. Row by row, as drawn: 1 fork-knife · 2 car · 3 bag · 4 bolt · 5 heart · 6 book · 7 ticket · 8 gift · 9 home · 10 phone · 11 card · 12 banknote · 13 bank · 14 wallet · 15 target (ring) · 16 repeat · 17 people · 18 person · 19 globe · 20 tag · 21 calendar · 22 clock · 23 chat · 24 star.
+Default categories use these: Rent and home → home, Food → fork-knife, Groceries → bag, Dining → fork-knife, Tea → fork-knife, Bills → bolt, Electricity → bolt, Internet → globe, Mobile → phone, Transport → car, Fuel → car, Rides → car, Shopping → bag, Clothes → tag, Household → home, Health → heart, Doctor → heart, Medicine → heart, Education → book, Fees → card, Books → book, Fun → ticket, Outings → ticket, Subscriptions → repeat, Salary → banknote, Freelance → wallet, Gifts → gift, Other → star. A custom category defaults to the star.
 
 ## Open decisions for the owner
 None. The next decisions come with the work: the Pro price at the start of Phase 4, and a later check of Urdu and Arabic layouts when those languages are added.

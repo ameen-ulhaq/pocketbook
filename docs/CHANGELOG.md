@@ -1,5 +1,15 @@
 # Changelog
 
+## Design update 3: 39 screens, gold tokens (2026-11-16)
+- **Tokens:** added `gold-tint` `#F6EBCF` and `gold-ink` `#7A5B12` to `tokens.json` and `tokens.css` (Pro tag only). Contrast checked with the WCAG formula: gold-ink on gold-tint 5.31:1, on white 6.30:1, on the page background 5.87:1. All pass 4.5:1 for body text.
+- **New screens 31 to 39 in SCREENS:** Choose an icon, Auto-lock, Reminders, About and help, Erase everything, Add sender, Auto-capture on iPhone, Forgot PIN (no biometrics), Change PIN.
+- **Changed screens:** More now has Reminders, Auto-lock, Change PIN, About and help and Delete all data; New category has a See all link to the icon picker; Forgot PIN and Allowed senders link to the new erase and Add sender screens. SCREENS 2, 11, 19, 24, 25 and 27 rewritten.
+- **FLOWS:** Change PIN (flow 28), reminders (25), capture setup with the message test and the iPhone guide (27), forgot PIN with and without biometrics (2), new flows 29 (Delete all data), 30 (icons) and 31 (auto-lock); reachability updated.
+- **SPEC:** settings list rewritten (reminders, auto-lock with a 15 minute option, change PIN, delete all data, no theme); reminder keys in `settings`; screen count 39.
+- **Static HTML:** 9 new screens and 4 changed ones in `docs/design/screens/`; index shows all 39.
+- **GAPS:** the matching design items removed; icon list replaced with the 24 actually drawn and a new default category mapping (the earlier proposed list is gone).
+- **New findings:** Add sender has no Account or default category row; Help and tips has no page or text; Erase everything's Back and Cancel always go to More; the Weekly backup switch exists on both Reminders and Backup and export (one setting); the Reminders screen holds items from three phases, so rows appear as their features land.
+
 ## Design update 2: 10 screens refreshed (2026-11-16)
 Re-read from the canvas; docs and `docs/design/screens/` now match.
 - **Add:** Tags row under Note. **Detail:** Duplicate beside Edit. **Split a bill:** Date and Category rows. **Reports (both tabs):** period arrows around the period label, next dimmed at the current period.
