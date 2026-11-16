@@ -10,6 +10,7 @@ Status key: **Decide** = needs the owner's call (a default is given so work is n
 | Restore from Welcome | "Have a backup? Restore it" link under Start tracking; file picker, confirm, then Home. Needed because a new phone has no other way in before setup | Default · Design |
 | Create PIN [P1] | After setup (optional) or when turning on App lock: enter 4 digits, confirm, then "Use Face ID or fingerprint?" | Default · Design |
 | Change PIN [P1] | More → Security; ask current PIN, then new twice | Default |
+| Currency lock [P1] | Currency is read-only once any entry exists (see Resolved decisions) | Default |
 | Forgot PIN [P1] | No server, so no recovery. Offer biometric if on; otherwise "Reset app" (type RESET) which erases data and returns to Welcome where a backup can be restored | Decide |
 | Auto-lock time [P1] | Immediately, 1 minute, 5 minutes (default 1 minute); a row in Security | Default · Design |
 | Lockout schedule [P1] | 30 s after 5 wrong tries, 1 min after 10, 5 min after 15, then 15 min per 5; kept across app restarts | Default |
@@ -39,10 +40,10 @@ Account detail (balance, its transactions, edit, adjust, archive, delete when em
 ## Rules that were missing or contradictory (now written, mark Decide where noted)
 - Month naming when the start day is not 1 (named by the month it starts in). Default
 - Future-dated entries count from their date and show as Upcoming. Default
-- Free limits count open loans and open splits only, not split shares, on-behalf or held debts. **Decide** (alternative: lifetime counts)
+- Free limits count open loans and open splits only, not split shares, on-behalf or held debts. Resolved.
 - Split paid by someone else: the user's share is an expense with no account plus a debt to the payer. Default
 - A capture with no category opens Add instead of saving as Uncategorized. Default
-- Installments on a debt are a recurring debt payment; recurring transfers are out of v1. **Decide** (alternative: allow recurring transfers for "Savings circle"-style saving)
+- Installments on a debt are a recurring debt payment; recurring transfers are out of v1. Resolved.
 - Budget percent shows 99% until the limit is reached; legend percentages add to 100. Default
 - Adjust balance creates an `adjustment` entry that is neither income nor spending. Default
 
@@ -57,7 +58,7 @@ Account detail (balance, its transactions, edit, adjust, archive, delete when em
 - **Date change at midnight:** "Today" labels update when the app returns to the foreground.
 
 ## Settings additions
-Reminders (daily "log your day" time), Auto-lock, Change PIN, Debts and Splits shortcuts, About and Help (version, privacy statement "all data stays on this phone", contact), Dark theme tokens (a `dark` theme in `tokens.json` and a contrast check), Delete all data (confirm twice). Backup file encryption is a Decide below.
+Reminders (daily "log your day" time), Auto-lock, Change PIN, Debts and Splits shortcuts, About and Help (version, privacy statement "all data stays on this phone", contact), Dark theme (later release: a `dark` theme in `tokens.json`, a contrast check, and the Theme row; not in v1), Delete all data (confirm twice).
 
 ## Pro and advanced [P4]
 Pro success state; Restore result messages; Multi-currency flow (account currency, manual exchange rates, base currency for totals, rates screen, transfers between currencies, per-currency debts); Home-screen widget (Add expense, balance); iPhone Shortcuts setup guide (in-app steps with a ready template); Android notification-listener permission explainer; CSV statement import (listed in SPEC but in no phase: it is now P2, after export).
@@ -68,20 +69,23 @@ App name and icon, privacy policy page and store privacy answers ("no data colle
 ## Technical feasibility to confirm in Task 1 (before building the phase that needs them)
 These depend on what NativePHP Mobile supports today; check the docs and licence first and tell the owner if any is not possible.
 - Secure storage for the PIN hash, biometrics, local notifications and scheduled reminders, background task for recurring, file save/share/pick, in-app purchases (both stores), share-to-app (Android share intent, iOS share extension), home-screen widget (iOS WidgetKit is native Swift), Shortcuts action (iOS App Intents), Android SMS/notification listener.
-- Google Play restricts the SMS permission; an expense app usually needs a policy declaration and may be refused. Safer default: read notifications only, SMS later if approved. **Decide** after the check.
+- Google Play restricts the SMS permission; an expense app usually needs a policy declaration and may be refused. Resolved: notifications first; SMS is optional and added only if approved.
 - iOS cannot read SMS or other apps' notifications, so iPhone auto-capture stays Shortcuts-only.
 - Local notifications are limited on iOS (64 pending); schedule the next ones and reschedule on app open.
 
+## Resolved decisions (owner, 2026-11-16)
+1. Free limits count open (not settled) loans and splits only.
+2. Recurring transfers are not allowed in v1.
+3. Backup is an unencrypted file in v1, with a note on the Backup screen (**Design**: the note is not drawn).
+4. Android capture reads notifications first; SMS is optional and later, only if Google Play allows it. The Pro screen copy "SMS and Shortcuts" should read "notifications and Shortcuts" (**Design**).
+5. v1 is light-only. The Theme row is removed from the Settings spec (the static screen still draws it, omit it); dark tokens wait for a later release.
+6. Currency cannot be changed once any entry exists; it is set at setup. Changing it means Delete all data and starting again.
+7. CSV statement import is Phase 2 (also written in `CLAUDE.md`).
+
 ## Open decisions for the owner
-1. Forgot PIN policy (see above).
-2. Whether changing the currency in Settings should be blocked once data exists (recommended: allow display change with a clear warning; real conversion only in Pro multi-currency).
-3. App name and logo. "Pocketbook" is a placeholder.
-4. Pro price and store product ID.
-5. Languages to ship first. The setup screen lists English, Urdu, Arabic, Spanish and French; recommended v1 is English plus Urdu and Arabic to test right-to-left early. All text goes through language files from day one either way.
-6. Whether to ship light-only v1 and add Dark later (recommended). If yes, remove the Theme row until Dark exists.
-7. Free-limit counting (open vs lifetime) and what counts as a debt.
-8. Backup encryption: recommended v1 is an unencrypted file with a warning; optional password later.
-9. Whether recurring transfers are allowed.
-10. Android capture route: notifications only, or SMS too (store policy risk).
-11. Numerals for Arabic and Urdu.
-12. Backup staleness: "Safe" for 14 days, then amber "Old" (default; change if wanted).
+1. Forgot PIN policy (default: biometric if on, otherwise Reset app, then restore from a backup).
+2. App name and logo. "Pocketbook" is a placeholder.
+3. Pro price and store product ID.
+4. Languages to ship first. The setup screen lists English, Urdu, Arabic, Spanish and French; recommended v1 is English plus Urdu and Arabic to test right-to-left early. All text goes through language files from day one either way.
+5. Numerals for Arabic and Urdu (default: Western digits).
+6. Backup staleness: "Safe" for 14 days, then amber "Old" (default; change if wanted).

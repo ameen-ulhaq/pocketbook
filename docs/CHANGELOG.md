@@ -1,5 +1,15 @@
 # Changelog
 
+## Owner decisions applied (2026-11-16)
+- Free limits count open items only (was Decide; now written as final in SPEC and GAPS).
+- Recurring transfers are not allowed in v1 (final).
+- Backup is unencrypted in v1. Added a "Backups are not encrypted" note to the Backup and export spec (needs drawing).
+- Android capture: notifications first, SMS optional and later. SPEC, SCREENS (Review entries), FLOWS 27 and GAPS updated; Pro screen copy to change to "notifications and Shortcuts" (needs design).
+- Light-only v1: removed the Theme row from the Settings spec (SCREENS 19, phase gating, slips list), the `theme` setting from SPEC, and the Theme item from FLOWS 19. Dark tokens moved to a later release in GAPS.
+- Currency is locked once any entry exists (SCREENS 19, FLOWS 19, SPEC). Replaces "display change with a warning".
+- `CLAUDE.md` Phase 2 now lists CSV statement import.
+- `docs/GAPS.md`: added "Resolved decisions" and cut the open list from 12 to 6 (Forgot PIN, app name, Pro price, languages, numerals, backup staleness).
+
 ## Task 0 audit (2026-11-16)
 
 Method: read every doc, extracted the visible text of all 21 static screens and compared each with `docs/SCREENS.md`, checked the sample numbers in the designs for arithmetic, then traced every screen and rule through `docs/FLOWS.md` and the data model in `docs/SPEC.md`. The design files were not changed (they are exports); their slips are listed at the end of `docs/SCREENS.md`.
