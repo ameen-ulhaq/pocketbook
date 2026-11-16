@@ -67,14 +67,14 @@ A simple, complete personal expense app for everyone, in any region. Works offli
 ## Data model (draft)
 
 - `settings(key, value)`: language, currency, month_start_day, last_backup_at, reminder times. Security settings are not stored here.
-- `accounts(id, name, type, currency, opening_balance_minor, archived)`
+- `accounts(id, name, type, currency, opening_balance_minor, archived)`: `type` is cash, bank, card or wallet (shown as Cash, Bank, Card, Mobile wallet); name unique among open accounts.
 - `categories(id, name, kind, icon, parent_id, sort, archived)`: `kind` is expense or income; a subcategory inherits its parent's kind; one level deep.
 - `transactions(id, type, amount_minor, currency, account_id nullable, to_account_id, category_id, occurred_on, note, source, split_id, debt_id, recurring_id, capture_id, created_at, updated_at)`
   - `amount_minor` is always positive; direction comes from `type`. `account_id` is null only for the user's own share of a bill someone else paid.
   - `source`: typed, quick_add, shared_in, recurring, capture, split, debt (feeds the "Added" row on Detail).
   - Unique `(recurring_id, occurred_on)` where `recurring_id` is not null, so a due item can never post twice.
 - `tags(id, name)` and `transaction_tags(transaction_id, tag_id)`
-- `budgets(id, category_id nullable, limit_minor, period)`: `period` is always `month` in v1; null category = overall budget; one budget per category.
+- `budgets(id, category_id nullable, limit_minor, period, alerts_on)`: `period` is always `month` in v1; `alerts_on` is the form's warning switch (default on); null category = overall budget; one budget per category.
 - `recurring(id, type, amount_minor, account_id, category_id, debt_id nullable, note, frequency, day, month, start_on, next_run_on, active, remind_days)`: `type` is expense, income or debt_payment; `day` is day of month (1–31, clamped to the month's last day) or weekday; `month` is used by yearly.
 - `people(id, name)`
 - `debts(id, person_id, direction, kind, principal_minor, currency, due_on, note, status, installment_minor nullable)`: `direction` owed_to_me or i_owe; `kind` loan, on_behalf, held, split_share, installment; `status` open or settled. Remaining = principal − sum of payments.
@@ -85,12 +85,15 @@ A simple, complete personal expense app for everyone, in any region. Works offli
 - `allowed_senders(id, name_or_number, account_id, default_category_id, enabled)` (P4)
 - `exchange_rates(currency, rate_to_base, updated_on)` (P4, Pro)
 
-## Screens (21)
+## Screens (30)
 
 Row 1: Welcome and setup, App lock, Home, Add transaction, Transactions (history), Transaction detail.
 Row 2: Accounts, Categories, Budgets, Recurring, Review auto-captured entries.
 Row 3: Reports overview, Reports trends, Debts, Debt detail with record payment, Paid on behalf.
 Row 4: Split a bill, Split detail, Settings (More), Backup and export, Pro upgrade.
+
+Row 5 (PIN and capture): Create a PIN, Confirm PIN, Forgot PIN, Allowed senders.
+Row 6 (Add and edit forms): New account, New category, New budget, New recurring item, Add debt.
 
 Navigation: bottom bar with Home, History, a raised Add button, Reports, More. 78px high, labels always shown. Accounts, Categories, Budgets and Debts are list screens under More: they keep the bar with More highlighted and have no Back arrow. Recurring, Review entries, Backup, Pro and every detail or form screen have a Back arrow and no bar.
 
