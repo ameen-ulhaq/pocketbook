@@ -114,22 +114,25 @@ Optional: set an **Installment** (amount and day of month) on Add debt. On each 
 
 ## 21. Manage accounts
 1. More → **Accounts** → **Add account** → **New account**: pick Type (Cash, Bank, Card, Wallet), Name, Currency, Opening → **Save account**.
-2. Tap an account → **Account detail**: Edit, **Adjust balance**, Archive, Delete (only with no entries).
-3. Adjust balance: enter the real balance; the difference is saved as an Adjustment entry (not income or spending).
+2. Tap an account → **Account detail**: balance, **Edit**, **Transfer**, recent entries, **See all in History**.
+3. **Edit** → **Edit account**: change Name or Type; change **Balance** to the real figure and the difference is saved as an Adjustment entry (not income or spending; on an account with no entries the opening balance changes instead).
+4. **Archive account** (confirm), or **Delete account** when it has no entries.
 
 ## 22. Manage categories
 1. More → **Categories** → Expense or Income → **New category**: Expense/Income, Name, Inside (optional parent), Icon → **Save category**.
 2. Tap a row → edit, archive, or delete. Deleting a category in use asks which category receives its entries first.
 
 ## 23. Edit or delete a debt or split
-1. Debt detail or Split detail → "⋯" menu → Edit or Delete → confirm.
-2. Deleting a split removes its own-share expense and debts; deleting a debt with payments asks whether to keep or remove the account entries.
+1. Debt detail → "⋯" → **Debt menu**: Edit debt (Add debt filled in, red Delete), Change due date, **Mark as settled** (writes off the remainder; no money moves), Delete debt (confirm).
+2. Split detail → "⋯" → **Split menu**: Edit split (Split a bill filled in, red Delete), Share summary, Delete split (confirm).
+3. Deleting a split removes its own-share expense and debts; deleting a debt with payments asks whether to keep or remove the account entries.
+4. The same pattern edits a category, budget, recurring item or sender: tap it, the New form opens filled in, change it and **Save changes**, or tap the red **Delete**.
 
 ## 24. Reset after a forgotten PIN
 See flow 2 step 4 and flow 29. Erase removes the database, settings and PIN; a backup file can then be restored from Welcome.
 
 ## 25. Daily reminder (P2)
-1. More → **Reminders** → switch **Log your day** on, set **Time** (default 9:00 pm) → permission explainer → system permission → **Done**.
+1. More → **Reminders** → switch **Log your day** on, tap **Time** (default 9:00 pm) → **Time picker** → **Set time** → permission explainer → system permission → **Done**.
 2. A local notification "Anything to log today?" opens Add.
 3. The same screen holds Weekly backup, Budget warnings and Recurring and debt due dates; the notes say reminders cannot appear if notifications are off in the phone settings.
 
@@ -158,5 +161,12 @@ See flow 2 step 4 and flow 29. Erase removes the database, settings and PIN; a b
 ## 31. Set auto-lock
 1. More → Security → **Auto-lock** (needs App lock on) → pick Immediately, After 1 minute, After 5 minutes or After 15 minutes → **Done**.
 
+## 32. Capture while notification access is off (Android)
+1. More → Allowed senders → **Allowed senders: access off** shows the amber alert and the dimmed list.
+2. **Open phone settings** → allow notification access → return; the screen re-checks and shows the normal list. **Add sender** works either way.
+
+## 33. Read help
+1. More → **About and help** → **Help and tips** → five short answers (data location, new phone, transfers, repayments, forgot PIN).
+
 ## Reachability check (every screen)
-Welcome 1 · Lock 2 · Home (tab) · Add 3, 5, 6 · History (tab) 7 · Detail 7 · Accounts 6, 21 · Categories 22 · Budgets 8 · Recurring 9 · Review entries 14 · Reports 17 · Trends 17 · Debts 10, 11 · Debt detail 10 · Paid on behalf 13 · Split a bill 12 · Split detail 12 · More (tab) 19 · Backup and export 15, 16 · Pro 18, 20 · Create a PIN 1, 28 · Confirm PIN 1, 28 · Change PIN 28 · Forgot PIN 2 · Forgot PIN, no biometrics 2 · Erase everything 2, 29 · Auto-lock 31 · Reminders 25 · About and help 19 · Choose an icon 30 · Allowed senders 14, 27 · Add sender 27 · Auto-capture on iPhone 27 · New account 21 · New category 22 · New budget 8 · New recurring item 9 · Add debt 10, 11.
+Welcome 1 · Lock 2 · Home (tab) · Add 3, 5, 6 · History (tab) 7 · Detail 7 · Accounts 6, 21 · Categories 22 · Budgets 8 · Recurring 9 · Review entries 14 · Reports 17 · Trends 17 · Debts 10, 11 · Debt detail 10 · Paid on behalf 13 · Split a bill 12 · Split detail 12 · More (tab) 19 · Backup and export 15, 16 · Pro 18, 20 · Create a PIN 1, 28 · Confirm PIN 1, 28 · Change PIN 28 · Forgot PIN 2 · Forgot PIN, no biometrics 2 · Erase everything 2, 29 · Auto-lock 31 · Reminders 25 · Time picker 25 · Help and tips 33 · Account detail 21 · Edit account 21 · Debt menu 23 · Split menu 23 · Allowed senders: access off 32 · About and help 19 · Choose an icon 30 · Allowed senders 14, 27 · Add sender 27, 32 · Auto-capture on iPhone 27 · New account 21 · New category 22 · New budget 8 · New recurring item 9 · Add debt 10, 11.
