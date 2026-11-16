@@ -14,7 +14,7 @@ Each flow lists the steps in order, the screen at each step, and the rule that m
 1. App launch or return after the auto-lock time → **App lock**.
 2. Biometric prompt opens first; on failure or cancel use the PIN keypad.
 3. Right PIN → previous screen. Wrong PIN → shake, message, waits from 5 tries on (30 s, 1 min, 5 min, 15 min).
-4. **Forgot PIN?** → **Forgot PIN** screen with two choices: **Use Face ID or fingerprint** (only if on; unlocks to Home; then More → Change PIN needs no old PIN) or **Erase and start over** → confirm (Cancel / Erase) → all data, PIN and settings are removed → **Welcome**, where **Have a backup? Restore it** can load a file.
+4. **Forgot PIN?** → **Forgot PIN** screen with two choices: **Use Face ID or fingerprint** (only if on; unlocks to Home; then More → Change PIN needs no old PIN) or **Erase and start over** → **Erase everything** (type ERASE, Erase / Cancel) → all data, PIN and settings are removed → **Welcome**, where **Have a backup? Restore it** can load a file. If biometrics are off the screen is **Forgot PIN, no biometrics**, which offers only Erase or Back.
 
 ## 3. Add an expense
 1. Tap the raised **Add** button (or Add from Home empty state).
@@ -105,7 +105,7 @@ Optional: set an **Installment** (amount and day of month) on Add debt. On each 
 - Language: applies immediately.
 - Month starts on: reports, budgets and Home month totals recalculate; a note says history is unchanged.
 - Currency: changeable only until the first entry exists; after that the row is read-only (Delete all data and set up again to change it). Real multi-currency is Pro.
-- Auto-lock, Change PIN, Daily reminder: in More (see GAPS for the unplanned rows).
+- Auto-lock, Change PIN, Reminders, About and help, Delete all data: rows in More (flows 25, 28, 29, 31).
 - App lock: on → create PIN; off → ask PIN.
 
 ## 20. Hit a free limit
@@ -126,24 +126,37 @@ Optional: set an **Installment** (amount and day of month) on Add debt. On each 
 2. Deleting a split removes its own-share expense and debts; deleting a debt with payments asks whether to keep or remove the account entries.
 
 ## 24. Reset after a forgotten PIN
-See flow 2 step 4. Erase removes the database, settings and PIN; a backup file can then be restored from Welcome.
+See flow 2 step 4 and flow 29. Erase removes the database, settings and PIN; a backup file can then be restored from Welcome.
 
 ## 25. Daily reminder (P2)
-1. More → Reminders → switch on, choose time (default 8:00 pm) → permission explainer → system permission.
+1. More → **Reminders** → switch **Log your day** on, set **Time** (default 9:00 pm) → permission explainer → system permission → **Done**.
 2. A local notification "Anything to log today?" opens Add.
+3. The same screen holds Weekly backup, Budget warnings and Recurring and debt due dates; the notes say reminders cannot appear if notifications are off in the phone settings.
 
 ## 26. Share to add (P4)
 1. In another app share text to Pocketbook → the lock screen if on → **Add** opens prefilled using the quick-add rules; the user taps Save.
 
 ## 27. Capture setup (P4, Pro)
-- Android: More → Allowed senders → **Add sender** → permission explainer → notification access (SMS only if added later) → sender name or number, account, optional default category → messages appear in **Review entries**. A sender's switch pauses reading.
-- iPhone: More → Allowed senders shows the **On iPhone** steps (Shortcuts → New automation → Message → Run "Add to Pocketbook"); each message creates a review card.
+- Android: More → Allowed senders → **Add sender** → permission explainer → notification access (SMS only if added later) → enter Name and Sender, paste a sample message in **Try it with a message** to see the amount, type and merchant found → **Save sender** → messages appear in **Review entries**. A sender's switch pauses reading.
+- iPhone: More → Allowed senders opens **Auto-capture on iPhone**: **Open Shortcuts** → Automation → New Automation → Message (enter the bank's sender name, Run Immediately) → add "Add to Pocketbook" with the message text. Each message creates a review card; **Review entries** is the button on that screen.
 
 ## 28. Turn App lock on, off, or change the PIN
 1. More → Security → **App lock** on → **Create a PIN** → **Confirm PIN** (no Skip here; Back cancels and the switch returns to off).
 2. App lock off → ask for the PIN (or biometric) → lock removed and the stored PIN deleted.
-3. Change PIN (row not drawn): verify with biometric if on, else the current PIN → Create a PIN → Confirm PIN.
+3. **Change PIN**: enter the current PIN (or **Use Face ID or fingerprint instead**, shown when biometrics are on) → **Create a PIN** → **Confirm PIN** → back in More with "PIN changed".
 4. **Face ID or fingerprint** switch: only enabled while App lock is on; turning it on shows the system prompt.
 
+## 29. Delete all data
+1. More → **Delete all data** (last row) → **Erase everything?** shows the Last backup card (Safe, Old or No backup yet).
+2. Type ERASE → **Erase everything** turns active → tap it. Cancel or Back leaves without changes.
+3. Data, settings, PIN and notifications are removed; **Welcome** opens. A backup file can be restored from there.
+
+## 30. Pick a category icon
+1. New category → **Icon** row shows 8 icons → **See all** → **Choose an icon** (24).
+2. Tap one → **Use this icon** → back to New category with it selected.
+
+## 31. Set auto-lock
+1. More → Security → **Auto-lock** (needs App lock on) → pick Immediately, After 1 minute, After 5 minutes or After 15 minutes → **Done**.
+
 ## Reachability check (every screen)
-Welcome 1 · Lock 2 · Home (tab) · Add 3, 5, 6 · History (tab) 7 · Detail 7 · Accounts 6, 21 · Categories 22 · Budgets 8 · Recurring 9 · Review entries 14 · Reports 17 · Trends 17 · Debts 10, 11 · Debt detail 10 · Paid on behalf 13 · Split a bill 12 · Split detail 12 · More (tab) 19 · Backup and export 15, 16 · Pro 18, 20 · Create a PIN 1, 28 · Confirm PIN 1, 28 · Forgot PIN 2 · Allowed senders 14, 27 · New account 21 · New category 22 · New budget 8 · New recurring item 9 · Add debt 10, 11.
+Welcome 1 · Lock 2 · Home (tab) · Add 3, 5, 6 · History (tab) 7 · Detail 7 · Accounts 6, 21 · Categories 22 · Budgets 8 · Recurring 9 · Review entries 14 · Reports 17 · Trends 17 · Debts 10, 11 · Debt detail 10 · Paid on behalf 13 · Split a bill 12 · Split detail 12 · More (tab) 19 · Backup and export 15, 16 · Pro 18, 20 · Create a PIN 1, 28 · Confirm PIN 1, 28 · Change PIN 28 · Forgot PIN 2 · Forgot PIN, no biometrics 2 · Erase everything 2, 29 · Auto-lock 31 · Reminders 25 · About and help 19 · Choose an icon 30 · Allowed senders 14, 27 · Add sender 27 · Auto-capture on iPhone 27 · New account 21 · New category 22 · New budget 8 · New recurring item 9 · Add debt 10, 11.
