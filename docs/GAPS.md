@@ -37,9 +37,6 @@ Category picker (with subcategories, search, New category); Account picker (with
 - Validation and error states of every form (empty name, duplicate name, zero amount, split not adding up). Default
 
 ## Design still needed (short list)
-- **Debt-settled state:** how Debt detail looks after "Mark as settled" (a "Settled without payment" history line). **Design**
-- **Delete account** button for an account with no entries (same place as Archive). Default
-- **Time picker minutes:** the wheel steps by 10; confirm this is intended or use 5. **Decide**
 - **Back and Cancel on Erase everything** return to the caller (More or Forgot PIN); the static links all go to More. Default
 - The Debt, Split and time sheets are drawn over blank cards; build them over the real screen. Default
 
@@ -110,6 +107,10 @@ These depend on what NativePHP Mobile supports today; check the docs and licence
 ## Category icon set (24, drawn on "Choose an icon")
 Stored by name in `categories.icon`. Row by row, as drawn: 1 fork-knife · 2 car · 3 bag · 4 bolt · 5 heart · 6 book · 7 ticket · 8 gift · 9 home · 10 phone · 11 card · 12 banknote · 13 bank · 14 wallet · 15 target (ring) · 16 repeat · 17 people · 18 person · 19 globe · 20 tag · 21 calendar · 22 clock · 23 chat · 24 star.
 Default categories use these: Rent and home → home, Food → fork-knife, Groceries → bag, Dining → fork-knife, Tea → fork-knife, Bills → bolt, Electricity → bolt, Internet → globe, Mobile → phone, Transport → car, Fuel → car, Rides → car, Shopping → bag, Clothes → tag, Household → home, Health → heart, Doctor → heart, Medicine → heart, Education → book, Fees → card, Books → book, Fun → ticket, Outings → ticket, Subscriptions → repeat, Salary → banknote, Freelance → wallet, Gifts → gift, Other → star. A custom category defaults to the star.
+
+16. Time picker minutes step by 5.
+17. A settled debt uses Debt detail with the Record payment block hidden, a green Settled pill and a written-off history line.
+18. Delete account appears only for accounts with no entries (with a confirmation); otherwise only Archive.
 
 ## Open decisions for the owner
 None. The next decisions come with the work: the Pro price at the start of Phase 4, and a later check of Urdu and Arabic layouts when those languages are added.

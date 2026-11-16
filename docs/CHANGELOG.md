@@ -1,5 +1,11 @@
 # Changelog
 
+## Owner decisions: settled debt, delete account, time picker (2026-11-16)
+- Time picker minutes step by 5 (SCREENS 44). The drawn wheel steps by 10 and is listed as a sample slip.
+- A settled debt (paid in full or written off) uses Debt detail with the Record payment block hidden, a green "Settled" pill and a written-off history line (SCREENS 15; SCREENS 42, FLOWS 10, SPEC debts).
+- Delete account shows only for accounts with no entries, with a confirmation; otherwise only Archive (SCREENS 41, FLOWS 21).
+- GAPS: these moved to Resolved decisions 16 to 18; the three matching "Design still needed" items are removed. The settled look and the Delete account button still need drawing; the build follows the written rules.
+
 ## Design update 4: 46 screens (2026-11-16)
 - **New screens 40 to 46 in SCREENS:** Account detail, Edit account, Debt menu, Split menu, Time picker, Allowed senders (access off), Help and tips.
 - **Changed screens:** Add sender now has Account and Category rows ("Ask me each time" default); Accounts cards open Account detail; Debt detail and Split detail have a "⋯" that opens their menus; Reminders' Time row opens the Time picker; About links to Help and tips. SCREENS 7, 15, 18, 25, 26, 27, 28, 29, 36 and 38 updated.
