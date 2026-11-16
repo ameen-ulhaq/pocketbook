@@ -1,6 +1,6 @@
 # Pocketbook: screen-by-screen spec
 
-Source of truth for what each of the 21 designed screens contains and does. Each entry lists every element, every option, every action, the states, and the rules behind it.
+Source of truth for what each of the 30 designed screens contains and does. Each entry lists every element, every option, every action, the states, and the rules behind it.
 
 - **Design file:** the matching static page in `docs/design/screens/<Name>.html` (open `docs/design/screens/index.html`). Sample amounts there are examples only (US dollars); real values come from the user's data and currency.
 - **Online (clickable):** https://claude.ai/artifact/McKtWDuTK1kgQKSnffzJrs
@@ -39,9 +39,9 @@ First launch only. Gets the app usable in about 20 seconds.
 - **Cash on hand** field: typed amount, becomes the opening balance of the default Cash account. Default 0.
 - Helper text: "Set the month start to your payday if it is not the 1st. You can change all of this later in Settings."
 - **Start tracking** (primary).
-- **Have a backup? Restore it** text link under the button (not yet drawn, see GAPS). Opens the file picker, then the same confirm and result as Backup and export. After a successful restore, setup is skipped and the app opens on Home.
+- **Have a backup? Restore it** text link under the button. Opens the file picker, then the same confirm and result as Backup and export, then Home (setup is skipped). Static design: the link opens the Backup screen; build it as a direct file picker, because there is no More screen to go Back to before setup.
 
-**On Start tracking:** save settings, create the Cash account with the opening balance, seed default categories, then offer "Create a PIN" (see GAPS), then go to Home.
+**On Start tracking:** save settings, create the Cash account with the opening balance, seed default categories, then open Create a PIN (screen 22; it can be skipped), then go to Home.
 **Validation:** opening balance must be zero or positive and fit the currency's decimals. Default Cash account name is "Cash", type Cash. Main Bank and Mobile Wallet in the designs are samples, not seeded.
 **States:** none after completion; the screen never shows again.
 
@@ -58,7 +58,7 @@ Shown on launch and when returning to the app after the auto-lock time, if App l
 - PIN is 4 digits. On the 4th digit it checks automatically.
 - Right: go to the screen the user was on (or Home on cold start).
 - Wrong: dots clear with a shake and "Wrong PIN. Try again." Lockout waits are 30 seconds after 5 wrong tries, 1 minute after 10, 5 minutes after 15, then 15 minutes for every further 5. The count and the wait survive killing the app and reset on a correct PIN. During a wait the keypad is disabled and shows a countdown.
-- A **Forgot PIN?** link under the keypad (not drawn, see GAPS) offers biometric if on, otherwise Reset app.
+- A **Forgot PIN?** link under the biometric link opens Forgot PIN (screen 24). It stays available during a lockout wait.
 - While the app is in the app switcher, a plain cover hides balances (and on Android the window is marked secure).
 - Biometric success unlocks; biometric failure falls back to the keypad.
 - Auto-lock time is Immediately, 1 minute or 5 minutes (default 1 minute), set in More.
@@ -91,7 +91,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - **Account** field: picker of accounts with balances. Default is the account used last for this type, else Cash. For Transfer this becomes **From** and a second **To** field appears; they must differ.
 - **Date** field: date picker, default today; future dates allowed (the entry is marked "Upcoming" and counts from its date).
 - **Note** field: free text, one line.
-- **Tags** (optional): free-text chips, shown on Detail; not drawn on Add yet (GAPS). Hidden behind a small "Add tags" row until used.
+- **Tags** (optional): free-text chips, shown on Detail; not drawn on Add (GAPS). Show a small "Add tags" row until used.
 - Save button text follows the type: "Save expense", "Save income", "Save transfer".
 
 **Rules**
@@ -142,8 +142,8 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - Helper text about transfers.
 
 **Actions**
-- Tap an account → Account detail (see GAPS): its transactions, Edit (name, type, opening balance), Adjust balance (asks for the real balance, creates an `adjustment` entry for the difference; not income or spending), Archive (hides it and removes it from totals; confirm if the balance is not zero; history kept) and Delete (only when it has no entries).
-- Add account form: name, type (Cash, Bank, Card, Mobile wallet), currency, opening balance. Credit cards may go negative.
+- Tap an account → Account detail (see GAPS; the static design has no link from a card): its transactions, Edit (name, type, opening balance), Adjust balance (asks for the real balance, creates an `adjustment` entry for the difference; not income or spending), Archive (hides it and removes it from totals; confirm if the balance is not zero; history kept) and Delete (only when it has no entries).
+- Add account form: screen 26 (name, type, currency, opening balance). Credit cards may go negative.
 - Free tier: single currency. Multi-currency accounts are Pro (P4).
 
 ## 8. Categories (`Categories.html`, route `/categories`, P1)
@@ -151,7 +151,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 **Elements**
 - Title, segmented **Expense / Income**.
 - Rows: icon tile, name, subcategories line ("Groceries, Dining, Tea") or "N subcategories", this month's total, chevron.
-- **New category** button.
+- **New category** button (opens screen 27).
 
 **Defaults seeded at setup**
 - Expense: Rent and home (Rent, Maintenance), Food (Groceries, Dining, Tea), Bills (Electricity, Internet, Mobile), Transport (Fuel, Rides), Shopping (Clothes, Household), Health (Doctor, Medicine), Education (Fees, Books), Fun (Outings, Subscriptions), Other.
@@ -173,20 +173,21 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - A budget is monthly and follows the month start day. Overall budget is separate from category budgets (it is not the sum of them). One budget per category; the form hides categories that already have one. A category budget includes its subcategories. No rollover.
 - The percent is rounded to the nearest whole number but shows 99% until spending actually reaches the limit. At exactly 100% the bar is amber and the pill says "100% used"; "Over by" starts above the limit.
 - Alerts: local notification at 80% and 100% (once each per month).
-- New budget form: Overall or a category, monthly limit. Edit and delete by tapping a card.
+- New budget form: screen 29 (Whole month or One category, monthly limit, 80%/100% warning switch). Edit and delete by tapping a card (edit mode and Delete not drawn).
 
 ## 10. Recurring (`Recurring.html`, route `/recurring`, P2)
 
 **Elements**
 - Back, title "Recurring", explanation: "Posted automatically when due. If the app was closed, missed ones are added next time you open it."
+- The **New recurring item** button opens screen 28.
 - Cards: icon, name, schedule ("Monthly on the 5th · reminder 1 day before"), amount (+ green for income), and an on/off switch (off shows "paused").
 - **New recurring item** button.
 
 **Rules**
-- Frequencies: daily, weekly, monthly, yearly; day of month (1–31; on short months it posts on the last day) or weekday; optional reminder N days before. Types: expense, income, or a payment on one of my debts (installment).
+- Frequencies: daily, weekly, monthly, yearly; day of month (1–31; on short months it posts on the last day) or weekday; optional reminder N days before. Types: expense or income. A debt installment is a third type (payment on a debt) that the drawn form does not offer yet (GAPS).
 - Transfers cannot be recurring in v1.
 - On app open (and by background task where available) every due occurrence is posted, oldest first, with date = due date, each exactly once (a due date can never post twice). If the account was archived the item is paused with a note. The catch-up also runs after a restore.
-- Item form (not drawn): type, amount, name/note, category, account, frequency, day, start date, optional reminder, and for installments the debt.
+- Item form: screen 28 (New recurring item). Tapping a card opens the same form in edit mode.
 - Switch off pauses without deleting. Tap a card to edit; delete asks for confirmation and keeps already-posted entries.
 
 ## 11. Review entries (`Pending.html`, route `/captures`, P4, Pro)
@@ -194,7 +195,7 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 **Elements**
 - Back, title "Review entries", note: "Nothing is saved until you tap Add. Only messages from senders you allow are read, on this phone."
 - Cards: sender with icon, received time, the raw message in a shaded box, parsed amount, "merchant · category", a "Found by sender rule" pill, and buttons **Add**, **Edit**, **Ignore**.
-- **Manage allowed senders** button.
+- **Manage allowed senders** button (opens screen 25).
 
 **Actions**
 - Add saves exactly as parsed. If no category was found ("Uncategorized") Add opens Add prefilled instead, because a category is required. Edit opens Add prefilled. Ignore removes it from the list (kept hidden so the same message is not offered again).
@@ -232,16 +233,16 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 
 **Elements**
 - Title "Debts"; two summary boxes **Owed to you** (green) and **You owe** (red).
-- Rows are one per debt, not per person. Sections hide when empty. A debt past its due date shows a red "Overdue" pill instead of the amber due pill.
+- Rows are one per debt, not per person. Sections hide when empty. A debt past its due date shows a red "Overdue" pill instead of the amber due pill, and the detail line reads "Borrowed 2 Nov · was due 10 Nov" (drawn).
 - Section **Owed to you**: avatar, name, detail ("Loan · paid back $30 of $80", "Paid on his behalf · phone repair", "Dinner split · 12 Nov"), remaining amount, optional due pill ("Due 20 Nov", amber).
 - Section **You owe**: same pattern (personal loan with installment, borrowed from a person).
 - **Add debt** button.
 
 **Actions**
 - Tap a loan, installment, on-behalf or held row → Debt detail. Tap a split row → Split detail.
-- A **Split a bill** secondary button sits next to Add debt (not drawn, see GAPS). It is the only entry to Split a bill besides the More shortcut.
-- Add debt form: direction (I lent / I borrowed), person or lender, amount, optional due date, optional installment amount (a monthly payment; creates a recurring debt payment), note, and "Did the money move through an account?" with an account picker (if yes it creates a `debt_out`/`debt_in` entry that is not an expense or income; if no, only the debt is recorded).
-- Free tier: 3 open loans and 3 open splits (SPEC defines what counts); the 4th shows Pro with the reason.
+- A **Split a bill** secondary button sits next to Add debt (drawn) and opens Split a bill. The other entry is More → Debts and splits, which opens this screen.
+- Add debt form: screen 30. Direction (I lent / I borrowed), person, amount, due date, account (or "No account"), note. If an account is chosen it creates a `debt_out`/`debt_in` entry that is not an expense or income; with "No account" only the debt is recorded. The installment amount and a date are not in the drawn form (GAPS).
+- Free tier: 3 open loans and 3 open splits (SPEC defines what counts); the 4th shows Pro with the reason. Adding a debt (screen 30) or a split counts here.
 - Reminders: if a due date is set, a local notification on the due date at 9:00.
 
 ## 15. Debt detail (`DebtDetail.html`, route `/debts/{id}`, P3)
@@ -309,10 +310,10 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - Title "More".
 - **Pocketbook Pro** banner (gold star on dark): "One payment, yours for life" → Pro.
 - **General:** Language, Currency, Month starts on (day 1–28). There is no Theme row in v1 (light only); the static screen draws one, leave it out.
-- **Security:** App lock switch, Face ID or fingerprint switch.
-- **Money:** Recurring items, Budgets, Categories, Accounts.
-- **Data and capture:** Backup and export, Allowed senders (count, P4).
-- **Not drawn, to add (GAPS):** Debts and Splits shortcuts (P3), Reminders (daily "log your day"), Auto-lock time, Change PIN, About and help, Delete all data.
+- **Security:** App lock switch (on opens Create a PIN, screen 22; off asks for the PIN), Face ID or fingerprint switch (needs App lock on).
+- **Money:** Recurring items, Debts and splits (opens Debts), Budgets, Categories, Accounts.
+- **Data and capture:** Backup and export, Allowed senders (count of senders, opens screen 25, P4).
+- **Drawn since the first audit:** a **Debts and splits** row in Money (opens Debts) and the Allowed senders row opens screen 25. **Still not drawn (GAPS):** Reminders (daily "log your day"), Auto-lock time, Change PIN, About and help, Delete all data.
 
 **Rules**
 - **Currency is locked once any entry exists** (any transaction, debt or split). Until then it can be changed freely. When locked the row is read-only, shows no chevron, and a line under it says "Currency can't be changed once you have entries." The only way to change it is Delete all data and set up again (back up first). Pro (P4) adds accounts in other currencies; the base currency stays as chosen.
@@ -351,6 +352,146 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 
 ---
 
+## 22. Create a PIN (`PinCreate.html`, route `/lock/pin/create`, P1)
+
+Opened from Start tracking at the end of setup, and when App lock is switched on in More.
+
+**Elements**
+- Back arrow (to Welcome during setup, to More otherwise), lock logo tile, "Create a PIN", "Choose 4 digits. You will use it to open Pocketbook. It is stored only on this phone."
+- Four dots (filled as digits are typed), keypad 1 to 9, 0, delete key.
+- **Skip for now** link at the bottom. Shown only during setup; from More it is hidden (Back cancels and leaves App lock off).
+
+**Behavior**
+- On the 4th digit, go to Confirm PIN. Skip leaves App lock off and goes to Home. A 4-digit PIN such as 0000 or 1234 is allowed; there is no strength rule.
+- The Back arrow on Confirm returns here to choose a different PIN.
+
+## 23. Confirm PIN (`PinConfirm.html`, route `/lock/pin/confirm`, P1)
+
+The static screen draws the **error state** (title "Confirm PIN (error state)"); the normal state is the same with accent-colored empty dots and no message.
+
+**Elements**
+- Back arrow, lock logo tile, "Confirm your PIN", "Enter the same 4 digits again.", four dots, keypad.
+- Error: red dots and "PINs did not match. Try again." (announced as an alert). Dots clear and the user stays here; no limit on attempts.
+- Link **Use Face ID or fingerprint too** (with a person icon), shown only when the device has biometrics enrolled.
+
+**Behavior**
+- Match: save the salted PIN hash to secure storage, turn App lock on, go to Home (or back to More when opened from there). The PIN link is optional: tapping it first turns on biometric unlock (system prompt) and then finishes. Skipping it leaves the biometric switch off; it can be turned on later in More → Security.
+- The Home that follows is the first screen shown; App lock starts applying from the next launch or return.
+
+## 24. Forgot PIN (`PinForgot.html`, route `/lock/forgot`, P1)
+
+Opened from the Lock screen link.
+
+**Elements**
+- Back arrow (to Lock), title "Forgot your PIN?", "Pocketbook has no account or server, so your PIN cannot be reset by email. Pick one of these."
+- Option card **Use Face ID or fingerprint**: "Works if you turned it on. You can then set a new PIN in More."
+- Option card **Erase and start over** (red): "Deletes everything on this phone. You can restore a backup file afterwards."
+- Buttons at the bottom: primary **Use Face ID or fingerprint**, danger-style secondary **Erase and start over**.
+
+**Behavior**
+- Face ID or fingerprint: system prompt; success unlocks to Home. If biometrics are off or not enrolled the primary button and its card are hidden and the screen says "Face ID or fingerprint is not set up for Pocketbook." Only Erase remains. (Not drawn.)
+- After a biometric unlock the user may change the PIN in More without entering the old one (Change PIN asks for biometric if on, else the current PIN).
+- Erase and start over asks for confirmation (not drawn): "Erase everything? This deletes all data on this phone and cannot be undone." Cancel / Erase. Then it removes the database, settings, PIN and lock settings, and goes to Welcome, whose **Have a backup? Restore it** link restores a file.
+
+## 25. Allowed senders (`Senders.html`, route `/senders`, P4)
+
+Opened from More → Allowed senders and from "Manage allowed senders" on Review entries. Back goes to More.
+
+**Elements**
+- Back arrow, title "Allowed senders", note: "Only messages from these senders are read, and only on this phone. Nothing is saved until you tap Add in Review entries."
+- One card per sender: icon tile, name ("Bank alert", "Mobile Wallet"), "Sender name or number · Android", and an on/off switch. The count in More ("2") is the number of senders.
+- **How a message is read** card: an example message ("Debit $30 at FUEL STATION on 15-Nov.") and three pills showing what was found (Amount $30, Expense, Fuel station).
+- **On iPhone** card: "Set up a Shortcuts automation for each bank message. Steps: 1. Open Shortcuts. 2. New automation, Message. 3. Run "Add to Pocketbook"."
+- **Add sender** (primary).
+
+**Behavior and rules**
+- Android: shows the sender list and Add sender. The first time, a permission explainer then the system screen for notification access (SMS only if added later). If access is off the list shows "Notification access is off" with a button to the system setting. Not drawn.
+- iPhone: there is no sender list; only the How a message is read and On iPhone cards, plus an "Open Shortcuts" button. Hide Add sender. Not drawn.
+- Add sender form (not drawn): sender name or number, the account the messages are about, an optional default category. Tapping a card edits it; delete is inside edit. A switch off keeps the sender but stops reading.
+- The "· Android" text is the platform note; it is not shown to iPhone users.
+- Missing link to Review entries from here (GAPS): add a "Review entries (N)" row at the top.
+
+## 26. New account (`AddAccount.html`, route `/accounts/create`, P1)
+
+Opened from Accounts → Add account. Edit mode (not drawn) has the title "Edit account" and the same fields, plus Adjust balance, Archive and Delete.
+
+**Elements**
+- Back arrow, title "New account".
+- **Type** tiles in one row: Cash, Bank, Card, Wallet (one selected, Bank in the sample). "Wallet" is the tile label for the Mobile wallet type; lists show "Mobile wallet".
+- Fields: **Name** (typed), **Currency** (picker, chevron), **Opening** (typed balance).
+- Helper: "The opening balance is what the account holds today. Cards may go below zero."
+- **Save account** (primary), then toast and back to Accounts.
+
+**Rules**
+- Name is required and unique among open accounts (case-insensitive), because quick add matches by name.
+- Opening balance may be negative only for the Card type; it must fit the currency's decimals. Default 0.
+- Free tier: the currency is the base currency and the row is read-only with no chevron; changing it is Pro (P4).
+- Opening balance is not income. Editing it later changes the balance by the difference.
+
+## 27. New category (`AddCategory.html`, route `/categories/create`, P1)
+
+Opened from Categories → New category; tapping a category opens the same form in edit mode (title "Edit category", plus Archive and Delete, not drawn).
+
+**Elements**
+- Back arrow, title "New category", segmented **Expense / Income**.
+- Fields: **Name**, **Inside** (parent picker; empty means top level; "Bills" in the sample).
+- **Icon** grid, one tile selected. Eight icons are drawn (fork and knife, car, bag, bolt, heart, book, ticket, gift); the full fixed set is longer and scrolls (GAPS: list it).
+- Helper: "Choose "Inside" to make it a subcategory. Deleting a category that has entries asks you to move them first."
+- **Save category** (primary).
+
+**Rules**
+- Name required and unique within the same parent.
+- Inside lists only top-level categories of the same kind; picking one forces the segmented control to that kind and hides the control. A category that already has subcategories cannot be put inside another.
+- A subcategory uses its own icon; the picker defaults to the parent's icon.
+
+## 28. New recurring item (`AddRecurring.html`, route `/recurring/create`, P2)
+
+**Elements**
+- Back arrow (to Recurring), title "New recurring item", segmented **Expense / Income**.
+- Fields: **Amount** (typed), **Category**, **Account**, **Repeats** (Every day, week, month, year), **On day** (5th), **Remind** (None, on the day, 1 day before, 2 days, 3 days, 1 week), **Note**.
+- Helper: "Posted on its day. If the app was closed, it is added next time you open it."
+- **Save** (primary).
+
+**Rules**
+- On day follows Repeats: hidden for Every day; a weekday for Every week; a date and month for Every year; a day of month (1–31, the last day on short months) for Every month.
+- The Note is the item's name in the Recurring list; if empty the category name is used.
+- The first posting is the next date on or after today that matches the schedule; today's day is included. There is no start date field.
+- The drawn form has no debt installment type; debt installments are in GAPS.
+- Edit mode (not drawn): same form, a Delete button, and the pause switch stays on the list. Changes affect future postings only.
+
+## 29. New budget (`AddBudget.html`, route `/budgets/create`, P2)
+
+**Elements**
+- Back arrow (to Budgets), title "New budget", segmented **Whole month / One category** (One category selected in the sample).
+- Fields: **Category** (picker, hidden for Whole month), **Monthly limit** (typed).
+- Switch card **Warn me at 80% and 100%** ("A notification on this phone"), on by default.
+- Helper: "Budgets restart on your month start day. Spending from last month does not carry over."
+- **Save budget** (primary).
+
+**Rules**
+- Category picker lists top-level expense categories that do not yet have a budget; Whole month is available only once (if it exists, the form opens it for editing).
+- Limit must be greater than 0. Store the switch as `alerts_on` on the budget; alerts are once per threshold per month.
+- Edit mode (not drawn): title "Edit budget", same fields, and a Delete button.
+
+## 30. Add debt (`AddDebt.html`, route `/debts/create`, P3)
+
+Opened from Debts → Add debt.
+
+**Elements**
+- Back arrow (to Debts), title "Add debt", segmented **I lent / I borrowed**.
+- Fields: **Person** (picker with Add person), **Amount**, **Due date** (optional), **From account** (reads **Into account** for I borrowed), **Note**.
+- Helper: "Money you lend leaves the account but is not an expense. Choose "No account" if the money did not pass through one."
+- **Save debt** (primary).
+
+**Rules**
+- Amount greater than 0. Person required. The account picker has a "No account" option.
+- With an account, a `debt_out` (lent) or `debt_in` (borrowed) entry is created dated today. With no account, only the debt exists and no balance changes.
+- Free tier: the 4th open loan opens Pro instead.
+- A due date adds a due pill on Debts and a reminder on the due date. Not drawn: a Date row (DebtDetail shows "Lent 12 Oct"), so use today until it is designed, and the optional installment amount.
+
+
+---
+
 ## Known sample slips in the static screens (do not copy)
 
 - History: the "13 Nov" header says +$40 but its two entries (+$40 and −$12) net +$28.
@@ -362,3 +503,6 @@ Also used to edit (prefilled; title "Edit transaction"; button "Save changes").
 - Debts: lists 6 debts, more than the 3 free loans; it is a Pro or sample view. Split shares do not count.
 - Trends: stat label is "Saved this month" even when the chips can change the period.
 - Settings: draws a Theme row; v1 is light only, so omit it.
+- Detail, Add, Split a bill, Reports, Backup and Pro were not changed in the canvas: they still lack the items listed in GAPS (Duplicate, Tags, Date and Category rows, period arrows, backup note, Pro tag and copy).
+- Welcome's restore link opens the Backup screen; build a direct file picker.
+- Pin Confirm is drawn only in its error state.
