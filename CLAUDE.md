@@ -33,7 +33,7 @@ Online (private to the owner, may not open for you): screens https://claude.ai/a
 ## Phases
 
 1. **Core:** setup, PIN/biometric lock, accounts, categories, add/edit/delete transactions, history with search and filter, home, detail, settings, backup and restore.
-2. **Insights:** budgets with alerts, recurring items, reports and charts, CSV/PDF export, one-line quick entry.
+2. **Insights:** budgets with alerts, recurring items, reports and charts, CSV/PDF export, CSV statement import, one-line quick entry.
 3. **People and money:** debts, shared expenses and bill splitting, paid-on-behalf entries.
 4. **Advanced:** lifetime Pro purchase, share-to-add, home-screen widget, multi-currency, Android auto-capture of SMS/notifications, iPhone Shortcuts action.
 
